@@ -61,7 +61,8 @@ void setup()
 
     //initialize logger
     log_bitmask.set((uint32_t)-1);
-    logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
+    _log_bitmask = &log_bitmask;
+    //logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
 
     // initialize the barometer
     barometer.init();
