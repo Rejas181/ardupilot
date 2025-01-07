@@ -47,6 +47,8 @@ static AP_BoardConfig board_config;
 SITL::SIM sitl;
 #endif
 
+AP_Int32 log_bitmask;
+
 void setup();
 void loop();
 
@@ -61,7 +63,7 @@ void setup()
 
     //initialize logger
     log_bitmask.set((uint32_t)-1);
-    _log_bitmask = &log_bitmask;
+    //_log_bitmask = &log_bitmask;
     //logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
 
     // initialize the barometer
