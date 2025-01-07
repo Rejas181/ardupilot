@@ -47,7 +47,7 @@ static AP_BoardConfig board_config;
 SITL::SIM sitl;
 #endif
 
-AP_Int32 log_bitmask;
+//AP_Int32 log_bitmask;
 
 void setup();
 void loop();
