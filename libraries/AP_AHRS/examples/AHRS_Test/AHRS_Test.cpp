@@ -52,6 +52,8 @@ public:
         BoardConfig.init();
         ins.init(100);
         ahrs.init();
+        log_bitmask.set((uint32_t)-1);
+        logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
     }
     AP_Int32 unused_log_bitmask;
     struct LogStructure log_structure[1] = {
@@ -81,9 +83,7 @@ void setup(void)
         hal.console->printf("No compass detected\n");
     }
     AP::gps().init();
-    log_bitmask.set((uint32_t)-1);
-    logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
-
+    
 }
 
 void loop(void)
