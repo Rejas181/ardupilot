@@ -59,6 +59,10 @@ void setup()
 
     hal.scheduler->delay(1000);
 
+    //initialize logger
+    log_bitmask.set((uint32_t)-1);
+    logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
+
     // initialize the barometer
     barometer.init();
     barometer.calibrate();
