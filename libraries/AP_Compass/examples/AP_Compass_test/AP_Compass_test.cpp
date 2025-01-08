@@ -26,23 +26,7 @@
 #include <AP_ExternalAHRS/AP_ExternalAHRS.h>
 #include <AP_SerialManager/AP_SerialManager.h>
 
-#define LOG_TEST_MSG 1
-struct PACKED log_Test {
-    LOG_PACKET_HEADER;
-    uint16_t v1, v2, v3, v4;
-    int32_t  l1, l2;
-};
 
-static const struct LogStructure log_structure[] = {
-    LOG_COMMON_STRUCTURES,
-    { LOG_TEST_MSG, sizeof(log_Test),       
-      "TEST",
-      "HHHHii",
-      "V1,V2,V3,V4,L1,L2",
-      "------",
-      "------"
-    }
-};
 
 const AP_HAL::HAL& hal = AP_HAL::get_HAL();
 
@@ -63,6 +47,26 @@ static Compass compass;
 static AP_SerialManager serial_manager;
 
 uint32_t timer;
+
+#define LOG_TEST_MSG 1
+struct PACKED log_Test {
+    LOG_PACKET_HEADER;
+    uint16_t v1, v2, v3, v4;
+    int32_t  l1, l2;
+};
+
+static const struct LogStructure log_structure[] = {
+    LOG_COMMON_STRUCTURES,
+    { LOG_TEST_MSG, sizeof(log_Test),       
+      "TEST",
+      "HHHHii",
+      "V1,V2,V3,V4,L1,L2",
+      "------",
+      "------"
+    }
+};
+
+
 
 // to be called only once on boot for initializing objects
 static void setup()
