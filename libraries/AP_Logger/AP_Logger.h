@@ -371,6 +371,8 @@ public:
 #endif
     }
 
+    bool _armed;
+
     void set_vehicle_armed(bool armed_state);
     bool vehicle_is_armed() const { return _armed; }
 
@@ -465,7 +467,7 @@ private:
     // fill LogStructure with information about msg_type
     bool fill_logstructure(struct LogStructure &logstruct, const uint8_t msg_type) const;
 
-    bool _armed;
+    //bool _armed;
 
     // state to help us not log unnecessary RCIN values:
     bool should_log_rcin2;
