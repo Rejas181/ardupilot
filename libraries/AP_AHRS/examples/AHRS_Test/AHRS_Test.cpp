@@ -34,6 +34,7 @@ public:
         ins.init(100);
         ahrs.init();
     }
+    /*
     AP_Int32 unused_log_bitmask;
     struct LogStructure log_structure[1] = {
     };
@@ -45,6 +46,7 @@ public:
     uint8_t get_num_log_structures() const override {
         return 0;
     }
+    */
 };
 
 static DummyVehicle vehicle;
