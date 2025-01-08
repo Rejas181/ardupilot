@@ -25,7 +25,6 @@
 #include <AP_Compass/AP_Compass.h>
 #include <AP_ExternalAHRS/AP_ExternalAHRS.h>
 #include <AP_SerialManager/AP_SerialManager.h>
-#include <AP_Logger/AP_Logger.h>
 
 
 
@@ -49,26 +48,6 @@ static AP_SerialManager serial_manager;
 
 uint32_t timer;
 
-#define LOG_TEST_MSG 1
-struct PACKED log_Test {
-    LOG_PACKET_HEADER;
-    uint16_t v1, v2, v3, v4;
-    int32_t  l1, l2;
-};
-
-static const struct LogStructure log_structure[] = {
-    LOG_COMMON_STRUCTURES,
-    { LOG_TEST_MSG, sizeof(log_Test),       
-      "TEST",
-      "HHHHii",
-      "V1,V2,V3,V4,L1,L2",
-      "------",
-      "------"
-    }
-};
-
-
-
 // to be called only once on boot for initializing objects
 static void setup()
 {
@@ -76,8 +55,6 @@ static void setup()
 
     board_config.init();
 
-    log_bitmask.set((uint32_t)-1);
-    logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
 
     vehicle.ahrs.init();
     compass.init();
