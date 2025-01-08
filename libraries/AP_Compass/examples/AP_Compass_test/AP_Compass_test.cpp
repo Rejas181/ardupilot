@@ -25,6 +25,7 @@
 #include <AP_Compass/AP_Compass.h>
 #include <AP_ExternalAHRS/AP_ExternalAHRS.h>
 #include <AP_SerialManager/AP_SerialManager.h>
+#include <AP_Logger/AP_Logger.h>
 
 
 
