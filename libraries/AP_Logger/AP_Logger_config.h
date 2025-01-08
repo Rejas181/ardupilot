@@ -5,7 +5,7 @@
 #include <GCS_MAVLink/GCS_config.h>
 
 #ifndef HAL_LOGGING_ENABLED
-#define HAL_LOGGING_ENABLED 1
+#define HAL_LOGGING_ENABLED 0
 #endif
 
 #ifndef HAL_LOGGING_BACKEND_DEFAULT_ENABLED
