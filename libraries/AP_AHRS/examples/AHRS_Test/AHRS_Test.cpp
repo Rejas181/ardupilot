@@ -18,25 +18,6 @@ void loop();
 
 const AP_HAL::HAL& hal = AP_HAL::get_HAL();
 
-#define LOG_TEST_MSG 1
-struct PACKED log_Test {
-    LOG_PACKET_HEADER;
-    uint16_t v1, v2, v3, v4;
-    int32_t  l1, l2;
-};
-
-static const struct LogStructure log_structure[] = {
-    LOG_COMMON_STRUCTURES,
-    { LOG_TEST_MSG, sizeof(log_Test),       
-      "TEST",
-      "HHHHii",
-      "V1,V2,V3,V4,L1,L2",
-      "------",
-      "------"
-    }
-};
-
-
 
 static AP_SerialManager serial_manager;
 
@@ -52,8 +33,6 @@ public:
         BoardConfig.init();
         ins.init(100);
         ahrs.init();
-        log_bitmask.set((uint32_t)-1);
-        logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
     }
     AP_Int32 unused_log_bitmask;
     struct LogStructure log_structure[1] = {
@@ -83,7 +62,6 @@ void setup(void)
         hal.console->printf("No compass detected\n");
     }
     AP::gps().init();
-    
 }
 
 void loop(void)
