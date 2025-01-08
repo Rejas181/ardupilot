@@ -26,6 +26,24 @@
 #include <AP_ExternalAHRS/AP_ExternalAHRS.h>
 #include <AP_SerialManager/AP_SerialManager.h>
 
+#define LOG_TEST_MSG 1
+struct PACKED log_Test {
+    LOG_PACKET_HEADER;
+    uint16_t v1, v2, v3, v4;
+    int32_t  l1, l2;
+};
+
+static const struct LogStructure log_structure[] = {
+    LOG_COMMON_STRUCTURES,
+    { LOG_TEST_MSG, sizeof(log_Test),       
+      "TEST",
+      "HHHHii",
+      "V1,V2,V3,V4,L1,L2",
+      "------",
+      "------"
+    }
+};
+
 const AP_HAL::HAL& hal = AP_HAL::get_HAL();
 
 static AP_BoardConfig board_config;
@@ -52,6 +70,10 @@ static void setup()
     hal.console->printf("Compass library test\n");
 
     board_config.init();
+
+    log_bitmask.set((uint32_t)-1);
+    logger.init(log_bitmask, log_structure, ARRAY_SIZE(log_structure));
+
     vehicle.ahrs.init();
     compass.init();
     hal.console->printf("init done - %u compasses detected\n", compass.get_count());
