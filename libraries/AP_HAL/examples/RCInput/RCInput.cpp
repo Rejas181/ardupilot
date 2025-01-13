@@ -19,7 +19,7 @@ const AP_HAL::HAL& hal = AP_HAL::get_HAL();
 
 #define MAX_CHANNELS 16
 
-static uint8_t max_channels_display = 0;  // Set to 0 for display numbers of channels detected.
+static uint8_t max_channels_display = 6;  // Set to 0 for display numbers of channels detected.
 static uint16_t last_value[MAX_CHANNELS];
 
 void setup(void)
