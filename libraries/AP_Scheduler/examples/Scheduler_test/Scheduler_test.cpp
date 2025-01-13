@@ -77,7 +77,7 @@ const AP_Scheduler::Task SchedTest::scheduler_tasks[] = {
     SCHED_TASK(five_second_call,      0.2,   1800, 9),
 };
 
-
+static AP_InertialSensor ins;
 void SchedTest::setup(void)
 {
 
