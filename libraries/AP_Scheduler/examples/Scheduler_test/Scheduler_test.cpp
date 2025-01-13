@@ -18,7 +18,7 @@ GCS_Dummy _gcs;
 
 const AP_HAL::HAL& hal = AP_HAL::get_HAL();
 
-AP_Logger logger;
+//AP_Logger logger;
 
 class SchedTest {
 public:
