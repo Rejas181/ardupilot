@@ -85,6 +85,20 @@ void SchedTest::setup(void)
 
     // initialise the scheduler
     scheduler.init(&scheduler_tasks[0], ARRAY_SIZE(scheduler_tasks), (uint32_t)-1);
+
+    ins.init(100);
+
+        // display initial values
+        display_offsets_and_scaling();
+
+        // display number of detected accels/gyros
+        hal.console->printf("\n");
+        hal.console->printf("Number of detected accels : %u\n", ins.get_accel_count());
+        hal.console->printf("Number of detected gyros  : %u\n\n", ins.get_gyro_count());
+
+        hal.console->printf("Complete. Reading:\n");
+
+
 }
 
 void SchedTest::loop(void)
