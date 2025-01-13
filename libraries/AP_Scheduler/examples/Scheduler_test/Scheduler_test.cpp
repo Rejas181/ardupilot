@@ -88,15 +88,6 @@ void SchedTest::setup(void)
 
     ins.init(100);
 
-        // display initial values
-        display_offsets_and_scaling();
-
-        // display number of detected accels/gyros
-        hal.console->printf("\n");
-        hal.console->printf("Number of detected accels : %u\n", ins.get_accel_count());
-        hal.console->printf("Number of detected gyros  : %u\n\n", ins.get_gyro_count());
-
-        hal.console->printf("Complete. Reading:\n");
 
 
 }
