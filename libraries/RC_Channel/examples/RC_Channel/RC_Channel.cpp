@@ -5,6 +5,7 @@
 
 #include <AP_HAL/AP_HAL.h>
 #include <RC_Channel/RC_Channel.h>
+#include <GCS_MAVLink/GCS_Dummy.h>
 
 // we need a boardconfig created so that the io processor is available
 #if HAL_WITH_IO_MCU
@@ -119,6 +120,6 @@ static void print_radio_values()
 			  (unsigned)rc().channel(i)->get_radio_max());
     }
 }
-
+GCS_Dummy _gcs;
 
 AP_HAL_MAIN();
