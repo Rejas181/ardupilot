@@ -6,7 +6,7 @@
 #include <AP_InertialSensor/AP_InertialSensor_config.h>
 
 #ifndef HAL_GCS_ENABLED
-#define HAL_GCS_ENABLED 0
+#define HAL_GCS_ENABLED 1
 #endif
 
 #ifndef HAL_MAVLINK_BINDINGS_ENABLED
