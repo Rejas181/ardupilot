@@ -120,6 +120,9 @@ static void print_radio_values()
 			  (unsigned)rc().channel(i)->get_radio_max());
     }
 }
+const struct AP_Param::GroupInfo        GCS_MAVLINK_Parameters::var_info[] = {
+    AP_GROUPEND
+};
 GCS_Dummy _gcs;
 
 AP_HAL_MAIN();
