@@ -68,19 +68,19 @@ void setup()
     print_radio_values();
 
     // set type of output, symmetrical angles or a number range;
-    rc().channel(CH_1)->set_angle(4500);
-    rc().channel(CH_1)->set_default_dead_zone(80);
+    rc().channel(CH_1)->set_angle(2000);
+    rc().channel(CH_1)->set_default_dead_zone(0);
 
-    rc().channel(CH_2)->set_angle(4500);
-    rc().channel(CH_2)->set_default_dead_zone(80);
+    rc().channel(CH_2)->set_angle(2000);
+    rc().channel(CH_2)->set_default_dead_zone(0);
 
-    rc().channel(CH_3)->set_range(1000);
-    rc().channel(CH_3)->set_default_dead_zone(20);
+    rc().channel(CH_3)->set_range(2000);
+    rc().channel(CH_3)->set_default_dead_zone(0);
 
-    rc().channel(CH_4)->set_angle(6000);
-    rc().channel(CH_4)->set_default_dead_zone(500);
+    rc().channel(CH_4)->set_angle(2000);
+    rc().channel(CH_4)->set_default_dead_zone(0);
 
-    rc().channel(CH_5)->set_range(1000);
+    rc().channel(CH_5)->set_range(10000);
 
     rc().channel(CH_6)->set_range(800);
 
