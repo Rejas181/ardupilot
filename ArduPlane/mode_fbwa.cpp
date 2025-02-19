@@ -4,6 +4,7 @@
 void ModeFBWA::update()
 {
     // set nav_roll and nav_pitch using sticks
+    printf("cabeceo demandado: %f",plane.channel_pitch>norm_input())
     plane.nav_roll_cd  = plane.channel_roll->norm_input() * plane.roll_limit_cd;
     plane.update_load_factor();
     float pitch_input = plane.channel_pitch->norm_input();
