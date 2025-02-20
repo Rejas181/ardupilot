@@ -6,6 +6,8 @@ void ModeGS::update()
     float pitch_input = plane.channel_pitch->norm_input();  //demanda de cabeceo nomrmailzado de -1 a 1 de 1000 a 2000 PWM
     float throttle_input = plane.channel_throttle->norm_input();
 
+    float temp = pitch_input+throttle_input;
+
     //plane.get_throttle_input(true) //obtener la entrada de 
    
 }
