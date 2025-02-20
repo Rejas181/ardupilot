@@ -303,6 +303,7 @@ private:
     ModeAcro mode_acro;
     ModeFBWA mode_fbwa;
     ModeFBWB mode_fbwb;
+    ModeGS mode_GS;
     ModeCruise mode_cruise;
     ModeAutoTune mode_autotune;
     ModeAuto mode_auto;
