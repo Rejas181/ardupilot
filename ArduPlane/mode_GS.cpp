@@ -7,7 +7,7 @@ void ModeGS::update()
     float throttle_input = plane.channel_throttle->norm_input();
 
     float temp = pitch_input+throttle_input;
-
+    printf("variable temporal: %f \n",temp);
     //plane.get_throttle_input(true) //obtener la entrada de 
    
 }
