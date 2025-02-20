@@ -1576,6 +1576,7 @@ uint8_t GCS_MAVLINK_Plane::send_available_mode(uint8_t index) const
         &plane.mode_acro,
         &plane.mode_fbwa,
         &plane.mode_fbwb,
+        &plane.mode_GS,
         &plane.mode_cruise,
         &plane.mode_autotune,
         &plane.mode_auto,
