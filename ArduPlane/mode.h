@@ -573,6 +573,23 @@ protected:
     bool _enter() override;
 };
 
+class ModeGS : public Mode
+{
+public:
+
+    Number mode_number() const override { return Number::GAIN_SCHEDULING; }
+    const char *name() const override { return "GAIN_SCHEDULING"; }
+    const char *name4() const override { return "GS"; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+    
+    //bool mode_allows_autotuning() const override { return false; }
+
+    void run() override;
+
+};
+
 class ModeCruise : public Mode
 {
 public:
