@@ -13,7 +13,7 @@ void ModeGS::update()
     if (AP::ahrs().airspeed_vector_true(airspeed_vec_bf)) {
         // if we don't have an airspeed estimate then we don't have a
         // valid wind estimate on blimps
-        printf("velocidad aerodinamica esitmada: %f,\n",airspeed_vec_bf[1]);
+        printf("velocidad aerodinamica esitmada: %f, %f, %f,\n",airspeed_vec_bf[1],airspeed_vec_bf[2]),airspeed_vec_bf[3];
     }
     
    
