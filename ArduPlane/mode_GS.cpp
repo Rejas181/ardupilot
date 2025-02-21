@@ -8,7 +8,14 @@ void ModeGS::update()
 
     float temp = pitch_input+throttle_input;
     printf("variable temporal: %f \n",temp);
-    //plane.get_throttle_input(true) //obtener la entrada de 
+    //plane.get_throttle_input(true) //obtener la entrada de   
+    Vector3f airspeed_vec_bf;
+    if (AP::ahrs().airspeed_vector_true(airspeed_vec_bf)) {
+        // if we don't have an airspeed estimate then we don't have a
+        // valid wind estimate on blimps
+        printf("velocidad aerodinamica esitmada: %f,\n",airspeed_vec_bf);
+    }
+    
    
 }
 
