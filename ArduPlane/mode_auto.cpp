@@ -119,6 +119,19 @@ void ModeAuto::update()
         plane.calc_nav_pitch();
         plane.calc_throttle();
     }
+
+    //----------------------telemetria de prueba--------------------------
+    Vector3f airspeed_vec_bf;
+    Vector3f vel_ang;
+    if (AP::ahrs().airspeed_vector_true(airspeed_vec_bf)) {
+        // if we don't have an airspeed estimate then we don't have a
+        // valid wind estimate on blimps
+        //printf("velocidad aerodinamica esitmada: %f, %f, %f,\n",airspeed_vec_bf[0],airspeed_vec_bf[1],airspeed_vec_bf[2]);
+        printf("velocidad aerodinamica esitmada: %f, %f, %f,\n",airspeed_vec_bf.x,airspeed_vec_bf.y,airspeed_vec_bf.z);
+    }
+    
+    vel_ang = ahrs.get_gyro();
+    printf("velocidad angular correjida: %f, %f, %f,\n",vel_ang.x,vel_ang.y,vel_ang.z);
 }
 
 void ModeAuto::navigate()
