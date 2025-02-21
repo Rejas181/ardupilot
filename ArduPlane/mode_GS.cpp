@@ -10,15 +10,17 @@ void ModeGS::update()
     printf("variable temporal: %f \n",temp);
     //plane.get_throttle_input(true) //obtener la entrada de   
     Vector3f airspeed_vec_bf;
+    Vector3f vel_ang;
     if (AP::ahrs().airspeed_vector_true(airspeed_vec_bf)) {
         // if we don't have an airspeed estimate then we don't have a
         // valid wind estimate on blimps
         //printf("velocidad aerodinamica esitmada: %f, %f, %f,\n",airspeed_vec_bf[0],airspeed_vec_bf[1],airspeed_vec_bf[2]);
         printf("velocidad aerodinamica esitmada: %f, %f, %f,\n",airspeed_vec_bf.x,airspeed_vec_bf.y,airspeed_vec_bf.z);
     }
+    
+    vel_ang = ahrs.get_gyro();
+    printf("velocidad angular correjida: %f, %f, %f,\n",vel_ang.x,vel_ang.y,vel_ang.z);
 
-    //_ang_vel_body.x = _ahrs.get_gyro().x;
-    //_ang_vel_body.z = _ahrs.get_gyro().z;
     
    
 }
