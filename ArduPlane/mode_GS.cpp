@@ -15,8 +15,8 @@ void ModeGS::update()
     float throttle_out;                                          //salida del acelerador en PWM
     float gamma_d;                                               //valor de gamma deseado   
 
-    if(pitch_input > 0) {gamma_d=pitch_input*16}                 //ajuste del angulo deseado de cabeceo
-    else {gamma_d=pitch_input*24}
+    if(pitch_input > 0) {gamma_d=pitch_input*16;}                 //ajuste del angulo deseado de cabeceo
+    else {gamma_d=pitch_input*24;}
 
     //float temp = pitch_input+throttle_input;            //Variable temporal para que no me marque error el compilado
     //printf("variable temporal: %f \n",temp);            //Función temporal para que no me marque error el compilado 
