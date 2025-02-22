@@ -20,7 +20,7 @@
 //
 #ifndef RTW_HEADER_controlador_h_
 #define RTW_HEADER_controlador_h_
-#include "AP_gain_scheduling/rtwtypes.h"
+#include "rtwtypes.h"
 #include <stddef.h>
 
 // Macros for accessing real-time model data structure

@@ -29,7 +29,7 @@ void ModeGS::update()
     if (AP::ahrs().airspeed_vector_true(airspeed_vec_bf)) {
         printf("velocidad aerodinámica estimada: %f, %f, %f,\n",airspeed_vec_bf.x,airspeed_vec_bf.y,airspeed_vec_bf.z);
     }
-
+    printf("angulo de cabeceo: %f,\n",ahrs.get_pitch());
     
     // display de velocidad angular
     vel_ang = ahrs.get_gyro();
