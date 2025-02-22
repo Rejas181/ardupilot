@@ -42,7 +42,7 @@ void ModeGS::update()
     Control.rtU.theta=ahrs.get_pitch();
     Control.rtU.q=vel_ang.y;
     Control.rtU.gammad=gamma_d;
-    Control.rtU.ud=throttle_input*36;                                //ajuste a velocidad maxima de 36 m/s
+    Control.rtU.Vd=throttle_input*36;                                //ajuste a velocidad maxima de 36 m/s
     //paso del controlador   
     Control.step();                                                  //step
     //Escritura de variables de salida                      
