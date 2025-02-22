@@ -18,7 +18,7 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-#include "controlador.h"
+#include "AP_gain_scheduling/controlador.h"
 
 // Constant parameters (default storage)
 const controlador::ConstP rtConstP{

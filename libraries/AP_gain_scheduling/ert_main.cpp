@@ -19,7 +19,7 @@
 // Validation result: Not run
 //
 #include <stdio.h>              // This example main program uses printf/fflush
-#include "controlador.h"               // Model header file
+#include "AP_gain_scheduling/controlador.h"               // Model header file
 
 static controlador rtObj;              // Instance of model class
 

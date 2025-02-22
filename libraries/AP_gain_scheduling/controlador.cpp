@@ -18,9 +18,9 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-#include "controlador.h"
+#include "AP_gain_scheduling/controlador.h"
 #include <cmath>
-#include "rtwtypes.h"
+#include "AP_gain_scheduling/rtwtypes.h"
 #include <stddef.h>
 #define NumBitsPerChar                 8U
 
