@@ -172,8 +172,9 @@ void Plane::stabilize_pitch()
         SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, 45*force_elevator);
         return;
     }
-
+    
     const float pitch_out = stabilize_pitch_get_pitch_out();
+    printf("pitch satbilize: %f",pitch_out);
     SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, pitch_out);
 }
 
