@@ -22,7 +22,7 @@ void ModeGS::update()
     //printf("variable temporal: %f \n",temp);            //Función temporal para que no me marque error el compilado 
 
     //display valores deseados
-    printf("valores deseados: gamma:%f, V:%f,\n",throttle_input*36);
+    printf("valores deseados: gamma: %f, V: %f,\n",gamma_d,throttle_input*36);
     
     //--------------------Datos de los sensores--------------------
     Vector3f airspeed_vec_bf;                           //Vector de Velocidad aerodinámica en sistema cuerpo en m/s
