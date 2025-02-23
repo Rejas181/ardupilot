@@ -17,12 +17,13 @@ void ModeGS::update()
 
     if(pitch_input > 0) {gamma_d=pitch_input*16;}                 //ajuste del angulo deseado de cabeceo
     else {gamma_d=pitch_input*24;}
+    float V_d=0.0260*throttle_out-16;
 
     //float temp = pitch_input+throttle_input;            //Variable temporal para que no me marque error el compilado
     //printf("variable temporal: %f \n",temp);            //Función temporal para que no me marque error el compilado 
 
     //display valores deseados
-    printf("valores deseados: gamma: %f, V: %f,\n",gamma_d,throttle_input*36);
+    printf("valores deseados: gamma: %f, V: %f,\n",gamma_d,V_d);
     
     //--------------------Datos de los sensores--------------------
     Vector3f airspeed_vec_bf;                           //Vector de Velocidad aerodinámica en sistema cuerpo en m/s
@@ -45,7 +46,7 @@ void ModeGS::update()
     Control.rtU.theta=ahrs.get_pitch();
     Control.rtU.q=vel_ang.y;
     Control.rtU.gammad=gamma_d;
-    Control.rtU.Vd=throttle_input*36;                                //ajuste a velocidad maxima de 36 m/s
+    Control.rtU.Vd=V_d;                                //ajuste a velocidad maxima de 36 m/s
     //paso del controlador   
     Control.step();                                                  //step
     //Escritura de variables de salida                      
