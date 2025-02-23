@@ -134,7 +134,7 @@ extern "C"
   // Test if value is infinite
   static boolean_T rtIsInf(real_T value)
   {
-    return (boolean_T)((value==rtInf || value==rtMinusInf) ? 1U : 0U);
+    return (boolean_T)((std::isinf(value)) ? 1U : 0U);
   }
 
   // Test if single-precision value is infinite
