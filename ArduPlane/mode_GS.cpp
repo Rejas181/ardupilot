@@ -17,7 +17,7 @@ void ModeGS::update()
 
     if(pitch_input > 0) {gamma_d=pitch_input*16;}                 //ajuste del angulo deseado de cabeceo
     else {gamma_d=pitch_input*24;}
-    float V_d=0.0260*throttle_out-16;
+    float V_d = 0.0260*throttle_input-16;
 
     //float temp = pitch_input+throttle_input;            //Variable temporal para que no me marque error el compilado
     //printf("variable temporal: %f \n",temp);            //Función temporal para que no me marque error el compilado 
