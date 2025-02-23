@@ -33,7 +33,7 @@ void ModeGS::update()
     if (AP::ahrs().airspeed_vector_true(airspeed_vec_bf)) {
         printf("velocidad aerodinámica estimada: %f, %f, %f,\n",airspeed_vec_bf.x,airspeed_vec_bf.y,airspeed_vec_bf.z);
     }
-    printf("angulo de cabeceo: %f,\n",ahrs.get_pitch());
+    printf("angulo de cabeceo: %f,\n",ahrs.get_pitch()*180/M_PI);
     
     // display de velocidad angular
     vel_ang = ahrs.get_gyro();
@@ -60,7 +60,7 @@ void ModeGS::update()
 
 
     //display de las señales de control
-    printf("señales de control: %f, %f,\n",pitch_out,throttle_out);
+    printf("señales de control de:%f, dT:%f,\n",Control.rtY.de,Control.rtY.dT);
     
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
