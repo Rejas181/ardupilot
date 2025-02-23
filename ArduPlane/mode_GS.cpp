@@ -60,14 +60,14 @@ void ModeGS::update()
 
 
     //display de las señales de control
-    printf("señales de control de:%f, dT:%f,\n",pitch_out,throttle_out);
+    printf("señales de control de:%f, dT:%f,\n",Control.rtY.de*180/M_PI,Control.rtY.dT);
     
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
     SRV_Channels::set_output_scaled(SRV_Channel::k_aileron, plane.roll_in_expo(false));         //Salida manual del alerón (obtenida de: mode manual)
-    SRV_Channels::set_output_pwm_chan(SRV_Channel::k_elevator, 1600);                      //Salida del elevador set_output_pwm_chan
+    SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, 1600);                      //Salida del elevador set_output_pwm_chan
     output_rudder_and_steering(plane.rudder_in_expo(false));                                    //Salida manual del Timón (obtenida de: mode manual)
-    SRV_Channels::set_output_pwm_chan(SRV_Channel::k_throttle, 2000);                   //Salida del acelerador
+    SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, 2000);                   //Salida del acelerador
    
    
 }
