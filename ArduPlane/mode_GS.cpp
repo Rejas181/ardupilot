@@ -60,7 +60,7 @@ void ModeGS::update()
 
 
     //display de las señales de control
-    printf("señales de control de:%f, dT:%f,\n",Control.rtY.de*180/M_PI,Control.rtY.dT);
+    printf("señales de control de:%f, dT:%f,\n",pitch_out,throttle_out);
     
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
