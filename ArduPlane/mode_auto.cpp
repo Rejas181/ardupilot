@@ -119,7 +119,7 @@ void ModeAuto::update()
         plane.calc_nav_pitch();
         plane.calc_throttle();
     }
-
+/*
     //----------------------telemetria de prueba--------------------------
     Vector3f airspeed_vec_bf;
     Vector3f vel_ang;
@@ -133,7 +133,7 @@ void ModeAuto::update()
     vel_ang = ahrs.get_gyro();
     printf("velocidad angular correjida: %f, %f, %f,\n",vel_ang.x,vel_ang.y,vel_ang.z);
 }
-
+*/
 void ModeAuto::navigate()
 {
     if (AP::ahrs().home_is_set()) {
