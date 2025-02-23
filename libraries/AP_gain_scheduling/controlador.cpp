@@ -361,7 +361,7 @@ real_T rt_atan2d_snf(real_T u0, real_T u1)
     }
 
     y = std::atan2(static_cast<real_T>(tmp), static_cast<real_T>(tmp_0));
-  } else if (std::equal(u1,0.0)) {
+  } else if (equal(u1,0.0)) {
     if (u0 > 0.0) {
       y = RT_PI / 2.0;
     } else if (u0 < 0.0) {
