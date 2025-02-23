@@ -11,8 +11,8 @@ void ModeGS::update()
     //-------------------------Entradas RC------------------------
     float pitch_input = plane.channel_pitch->norm_input();       //demanda de cabeceo normalizado de -1 a 1 de 1000 a 2000 PWM
     float throttle_input = plane.channel_throttle->norm_input(); //demanda de acelerador  normalizado de -1 a 1 de 1000 a 2000 PWM
-    float pitch_out;                                             //salida del elevador en PWM
-    float throttle_out;                                          //salida del acelerador en PWM
+    uint8_t pitch_out;                                             //salida del elevador en PWM
+    uint8_t throttle_out;                                          //salida del acelerador en PWM
     float gamma_d;                                               //valor de gamma deseado   
 
     if(pitch_input > 0) {gamma_d=pitch_input*16;}                 //ajuste del angulo deseado de cabeceo
@@ -65,9 +65,9 @@ void ModeGS::update()
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
     SRV_Channels::set_output_scaled(SRV_Channel::k_aileron, plane.roll_in_expo(false));         //Salida manual del alerón (obtenida de: mode manual)
-    SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, pitch_out);                      //Salida del elevador set_output_pwm_chan
+    SRV_Channels::set_output_pwm_chan(SRV_Channel::k_elevator, pitch_out);                      //Salida del elevador set_output_pwm_chan
     output_rudder_and_steering(plane.rudder_in_expo(false));                                    //Salida manual del Timón (obtenida de: mode manual)
-    SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, throttle_out);                   //Salida del acelerador
+    SRV_Channels::set_output_pwm_chan(SRV_Channel::k_throttle, throttle_out);                   //Salida del acelerador
    
    
 }
