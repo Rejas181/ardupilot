@@ -1,6 +1,5 @@
 #include "mode.h"
 #include "Plane.h"
-#include "AP_gain_scheduling/rtwtypes.h"
 #include <stdio.h>              // This example main program uses printf/fflush
 #include "AP_gain_scheduling/controlador.h"               // Model header file
 
