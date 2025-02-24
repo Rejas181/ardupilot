@@ -62,7 +62,7 @@ static uint32_T binsearch_u32d(real_T u, const real_T bp[], uint32_T startIndex,
 #define UNUSED_PARAMETER(x)            (void) (x)
 #endif
 #endif
-
+/*
 extern "C"
 {
   real_T rtInf;
@@ -72,7 +72,7 @@ extern "C"
   real32_T rtMinusInfF;
   real32_T rtNaNF;
 }
-
+*/
 extern "C"
 {
   //
@@ -120,7 +120,7 @@ extern "C"
   // Initialize the rtInf, rtMinusInf, and rtNaN needed by the
   // generated code. NaN is initialized as non-signaling. Assumes IEEE.
   //
-  /*
+  /**/
   static void rt_InitInfAndNaN(size_t realSize)
   {
     (void) (realSize);
@@ -131,7 +131,7 @@ extern "C"
     rtMinusInf = rtGetMinusInf();
     rtMinusInfF = rtGetMinusInfF();
   }
-*/
+
   // Test if value is infinite
   static boolean_T rtIsInf(real_T value)
   {
