@@ -50,7 +50,7 @@ void ModeGS::update()
     //paso del controlador   
     Control.step();                                                  //step
     //Escritura de variables de salida                      
-    if(Control.rtY.de>0){pitch_out=5729.378*Control.rtY.de+1500;}                          //conversion de variable de salida dT a periodo en s
+    if(Control.rtY.de>0){pitch_out=5729.378*Control.rtY.de+1500;}    //conversion de variable de salida dT a periodo en s
     else {pitch_out=17188.73*Control.rtY.de+1500;}
     throttle_out=1899.45*Control.rtY.dT-4500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
     
@@ -67,9 +67,9 @@ void ModeGS::update()
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
     SRV_Channels::set_output_scaled(SRV_Channel::k_aileron, plane.roll_in_expo(false));         //Salida manual del alerón (obtenida de: mode manual)
-    SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, pitch_out);                      //Salida del elevador set_output_pwm_chan
+    SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, pitch_out);                        //Salida del elevador set_output_pwm_chan
     output_rudder_and_steering(plane.rudder_in_expo(false));                                    //Salida manual del Timón (obtenida de: mode manual)
-    SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, throttle_out);                   //Salida del acelerador
+    SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, throttle_out);                     //Salida del acelerador
    
    
 }
