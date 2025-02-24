@@ -46,12 +46,13 @@ void ModeGS::update()
     Control.rtU.theta=ahrs.get_pitch();
     Control.rtU.q=vel_ang.y;
     Control.rtU.gammad=gamma_d;
-    Control.rtU.Vd=V_d;                                //ajuste a velocidad maxima de 36 m/s
+    Control.rtU.Vd=V_d;                                              //ajuste a velocidad maxima de 36 m/s
     //paso del controlador   
     Control.step();                                                  //step
     //Escritura de variables de salida                      
-    pitch_out=66.175*Control.rtY.de+1417.6;                          //conversion de variable de salida dT a periodo en s
-    throttle_out=1145.91*Control.rtY.dT+1500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
+    if(Control.rtY.de>0){pitch_out=5729.378*Control.rtY.de+1500;}                          //conversion de variable de salida dT a periodo en s
+    else {pitch_out=17188.73*Control.rtY.de+1500;}
+    throttle_out=1899.45*Control.rtY.dT-4500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
     
     //variables en la estructura para monitoreo (en simulink y en el programa anterior)
     //wd=Control.rtY.wd;
@@ -65,9 +66,9 @@ void ModeGS::update()
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
     SRV_Channels::set_output_scaled(SRV_Channel::k_aileron, plane.roll_in_expo(false));         //Salida manual del alerón (obtenida de: mode manual)
-    SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, -4500);                      //Salida del elevador set_output_pwm_chan
+    SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, pitch_out);                      //Salida del elevador set_output_pwm_chan
     output_rudder_and_steering(plane.rudder_in_expo(false));                                    //Salida manual del Timón (obtenida de: mode manual)
-    SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, 4500);                   //Salida del acelerador
+    SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, throttle_out);                   //Salida del acelerador
    
    
 }
