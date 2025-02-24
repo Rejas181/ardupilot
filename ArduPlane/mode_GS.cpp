@@ -11,8 +11,8 @@ void ModeGS::update()
     //-------------------------Entradas RC------------------------
     float pitch_input = plane.channel_pitch->norm_input();       //demanda de cabeceo normalizado de -1 a 1 de 1000 a 2000 PWM
     float throttle_input = plane.channel_throttle->norm_input(); //demanda de acelerador  normalizado de -1 a 1 de 1000 a 2000 PWM
-    uint8_t pitch_out;                                             //salida del elevador en PWM
-    uint8_t throttle_out;                                          //salida del acelerador en PWM
+    float pitch_out;                                             //salida del elevador en PWM
+    float throttle_out;                                          //salida del acelerador en PWM
     float gamma_d;                                               //valor de gamma deseado   
 
     if(pitch_input > 0) {gamma_d=pitch_input*16;}                 //ajuste del angulo deseado de cabeceo
@@ -62,7 +62,7 @@ void ModeGS::update()
 
     //display de las señales de control
     printf("señales de control de:%f, dT:%f,\n",Control.rtY.de,Control.rtY.de);
-    printf("señales de salida e:%f, T:%f,\n",float(pitch_out),float(throttle_out));
+    printf("señales de salida e:%f, T:%f,\n",pitch_out,throttle_out);
     
     //------------------------------------Salidas PWM-------------------------------------
     //Envio de señales PWM
