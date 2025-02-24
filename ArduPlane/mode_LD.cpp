@@ -3,7 +3,7 @@
 #include <stdio.h>              // This example main program uses printf/fflush
 #include "AP_fuzzy_logic/sistema_de_control.h"               // Model header file
 
-static sistema_de_control Control;       // Instance of model class
+static sistema_de_control ControlLD;       // Instance of model class
 
 void ModeLD::update()
 {
@@ -41,18 +41,18 @@ void ModeLD::update()
 
     //-------------controlador de ganancias programadas obtenido mediante MATLAB------------
     //Escritura de Variables de entrada
-    Control.rtU.u=airspeed_vec_bf.x;
-    Control.rtU.w=airspeed_vec_bf.z;
-    Control.rtU.theta=ahrs.get_pitch();
-    Control.rtU.q=vel_ang.y;
-    Control.rtU.gammad=gamma_d;
-    Control.rtU.Vd=V_d;                                              //ajuste a velocidad maxima de 36 m/s
+    ControlLD.rtU.u=airspeed_vec_bf.x;
+    ControlLD.rtU.w=airspeed_vec_bf.z;
+    ControlLD.rtU.theta=ahrs.get_pitch();
+    ControlLD.rtU.q=vel_ang.y;
+    ControlLD.rtU.gammad=gamma_d;
+    ControlLD.rtU.Vd=V_d;                                              //ajuste a velocidad maxima de 36 m/s
     //paso del controlador   
-    Control.step();                                                  //step
+    ControlLD.step();                                                  //step
     //Escritura de variables de salida                      
-    if(Control.rtY.delta_e>0){pitch_out=Control.rtY.delta_e*-4500;}    //conversion de variable de salida dT a periodo en s
-    else {pitch_out=Control.rtY.delta_e*4500;}
-    throttle_out=Control.rtY.delta_T*4500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
+    if(ControlLD.rtY.delta_e>0){pitch_out=ControlLD.rtY.delta_e*-4500;}    //conversion de variable de salida dT a periodo en s
+    else {pitch_out=ControlLD.rtY.delta_e*4500;}
+    throttle_out=ControlLD.rtY.delta_T*4500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
     
     //variables en la estructura para monitoreo (en simulink y en el programa anterior)
     //wd=Control.rtY.wd;
@@ -61,7 +61,7 @@ void ModeLD::update()
 
 
     //display de las señales de control
-    printf("señales de control de:%f, dT:%f,\n",Control.rtY.delta_e,Control.rtY.delta_e);
+    printf("señales de control de:%f, dT:%f,\n",ControlLD.rtY.delta_e,ControlLD.rtY.delta_e);
     printf("señales de salida e:%f, T:%f,\n",pitch_out,throttle_out);
     
     //------------------------------------Salidas PWM-------------------------------------
