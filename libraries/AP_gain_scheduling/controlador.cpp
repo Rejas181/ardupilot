@@ -619,6 +619,7 @@ void controlador::initialize()
 
   // initialize non-finites
   rt_InitInfAndNaN(sizeof(real_T));
+  printf("initializing controller");
 }
 
 // Constructor
