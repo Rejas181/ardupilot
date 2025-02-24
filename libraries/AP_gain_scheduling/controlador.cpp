@@ -23,6 +23,7 @@
 #include <cmath>
 #include "AP_gain_scheduling/rtwtypes.h"
 #include <stddef.h>
+#include <stdio.h>              // This example main program uses printf/fflush
 #define NumBitsPerChar                 8U
 
 extern real_T rt_atan2d_snf(real_T u0, real_T u1);
