@@ -77,7 +77,7 @@ void Plane::throttle_slew_limit()
 */
 bool Plane::suppress_throttle(void)
 {
-    if (control_mode == &mode_manual || control_mode == mode_GS) {
+    if (control_mode == &mode_manual || control_mode == &mode_GS) {
         // Throttle is never suppressed in manual mode
         return false;
     }
