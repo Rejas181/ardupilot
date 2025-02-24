@@ -62,6 +62,7 @@ public:
         LOITER_ALT_QLAND = 25,
 #endif
         GAIN_SCHEDULING = 26,
+        FUZZY_LOGIC = 27,
 
     // Mode number 30 reserved for "offboard" for external/lua control.
     };
@@ -581,6 +582,23 @@ public:
     Number mode_number() const override { return Number::GAIN_SCHEDULING; }
     const char *name() const override { return "GAIN_SCHEDULING"; }
     const char *name4() const override { return "GS"; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+    
+    //bool mode_allows_autotuning() const override { return false; }
+
+    void run() override;
+
+};
+
+class ModeLD : public Mode
+{
+public:
+
+    Number mode_number() const override { return Number::FUZZY_LOGIC; }
+    const char *name() const override { return "FUZZY_LOGIC"; }
+    const char *name4() const override { return "LD"; }
 
     // methods that affect movement of the vehicle in this mode
     void update() override;
