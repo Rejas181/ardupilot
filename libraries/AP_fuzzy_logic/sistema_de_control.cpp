@@ -25,7 +25,7 @@
 #include <stddef.h>
 #define NumBitsPerChar                 8U
 
-extern real_T rt_atan2d_snf(real_T u0, real_T u1);
+//extern real_T rt_atan2d_snf(real_T u0, real_T u1);
 static uint32_T plook_binx(real_T u, const real_T bp[], uint32_T maxIndex,
   real_T *fraction);
 static real_T intrp2d_g(const uint32_T bpIndex[], const real_T frac[], const
