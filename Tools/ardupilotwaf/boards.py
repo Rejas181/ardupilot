@@ -153,8 +153,8 @@ class Board:
             )
             env.AP_LIBRARIES += [
                 'AC_CustomControl',
-                'AP_gain_scheduling',
-                'AP_fuzzy_logic'
+                #'AP_gain_scheduling',
+                #'AP_fuzzy_logic'
 
             ]
             cfg.msg("Enabled custom controller", 'yes')
