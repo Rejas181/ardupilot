@@ -79,7 +79,7 @@ void ModeGS::run()
     // Run base class function and then output throttle
     //Mode::run();
     //reset_controllers();
-    
-    Control.initialize();                    // Initialize model
+    //bool init;
+    //Control.initialize();                    // Initialize model
     //output_pilot_throttle();
 }
