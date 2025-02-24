@@ -120,6 +120,7 @@ extern "C"
   // Initialize the rtInf, rtMinusInf, and rtNaN needed by the
   // generated code. NaN is initialized as non-signaling. Assumes IEEE.
   //
+  /*
   static void rt_InitInfAndNaN(size_t realSize)
   {
     (void) (realSize);
@@ -130,7 +131,7 @@ extern "C"
     rtMinusInf = rtGetMinusInf();
     rtMinusInfF = rtGetMinusInfF();
   }
-
+*/
   // Test if value is infinite
   static boolean_T rtIsInf(real_T value)
   {
