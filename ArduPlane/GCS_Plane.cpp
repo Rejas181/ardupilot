@@ -41,6 +41,7 @@ void GCS_Plane::update_vehicle_sensor_status_flags(void)
     case Mode::Number::STABILIZE:
     case Mode::Number::FLY_BY_WIRE_A:
     case Mode::Number::GAIN_SCHEDULING:
+    case Mode::Number::FUZZY_LOGIC:
     case Mode::Number::AUTOTUNE:
 #if HAL_QUADPLANE_ENABLED
     case Mode::Number::QSTABILIZE:

@@ -50,7 +50,7 @@ void ModeLD::update()
     //paso del controlador   
     Control.step();                                                  //step
     //Escritura de variables de salida                      
-    if(Control.rtY.delta_e>0){pitch_out=Control.rtY.delta_e;*-4500;}    //conversion de variable de salida dT a periodo en s
+    if(Control.rtY.delta_e>0){pitch_out=Control.rtY.delta_e*-4500;}    //conversion de variable de salida dT a periodo en s
     else {pitch_out=Control.rtY.delta_e*4500;}
     throttle_out=Control.rtY.delta_T*4500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
     
