@@ -344,7 +344,7 @@ void sistema_de_control::generadordematriz(real_T rtu_k1e, real_T rtu_k2e,
   rty_K1[5] = rtu_k3dT;
   rty_K1[7] = rtu_k4dT;
 }
-
+/*
 real_T rt_atan2d_snf(real_T u0, real_T u1)
 {
   real_T y;
@@ -380,7 +380,7 @@ real_T rt_atan2d_snf(real_T u0, real_T u1)
 
   return y;
 }
-
+*/
 // Model step function
 void sistema_de_control::step()
 {
