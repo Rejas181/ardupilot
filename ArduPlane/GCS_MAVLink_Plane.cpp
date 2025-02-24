@@ -38,6 +38,7 @@ MAV_MODE GCS_MAVLINK_Plane::base_mode() const
     case Mode::Number::STABILIZE:
     case Mode::Number::FLY_BY_WIRE_A:
     case Mode::Number::GAIN_SCHEDULING:
+    case Mode::Number::FUZZY_LOGIC:
     case Mode::Number::AUTOTUNE:
     case Mode::Number::FLY_BY_WIRE_B:
 #if HAL_QUADPLANE_ENABLED
@@ -1577,6 +1578,7 @@ uint8_t GCS_MAVLINK_Plane::send_available_mode(uint8_t index) const
         &plane.mode_fbwa,
         &plane.mode_fbwb,
         &plane.mode_GS,
+        &plane.mode_LD,
         &plane.mode_cruise,
         &plane.mode_autotune,
         &plane.mode_auto,
