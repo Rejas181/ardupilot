@@ -18,6 +18,8 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
+
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 #include "controlador.h"
 #include <cmath>
 #include "rtwtypes.h"
