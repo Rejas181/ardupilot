@@ -282,6 +282,70 @@ void Plane::Log_Write_Guided(void)
 #endif // AP_PLANE_OFFBOARD_GUIDED_SLEW_ENABLED
 }
 
+void Plane::Log_Write_GS(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT)
+{
+    struct log_GS pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_GS_MSG)
+        ,time_us    : AP_HAL::micros64()
+        ,V_d        : V_d
+        ,gamma_d    : gamma_d
+        ,vel_x      : vel_x
+        ,vel_y      : vel_z
+        ,theta      : theta
+        ,q          : q
+        ,deltae     : de
+        ,deltaT     : dT
+
+        };
+
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT)
+{
+    struct log_LD pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_LD_MSG)
+        ,time_us    : AP_HAL::micros64()
+        ,V_d        : V_d
+        ,gamma_d    : gamma_d
+        ,vel_x      : vel_x
+        ,vel_y      : vel_z
+        ,theta      : theta
+        ,q          : q
+        ,deltae     : de
+        ,deltaT     : dT
+
+        };
+
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+struct PACKED log_GS {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float V_d;
+    float gamma_d;
+    float vel_x;
+    float vel_z;
+    float theta;
+    float q;
+    float delta_e;
+    float delta_T;
+};
+
+struct PACKED log_LD {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float V_d;
+    float gamma_d;
+    float vel_x;
+    float vel_z;
+    float theta;
+    float q;
+    float delta_e;
+    float delta_T;
+};
+
 // incoming-to-vehicle mavlink COMMAND_INT can be logged
 struct PACKED log_CMDI {
     LOG_PACKET_HEADER;
@@ -484,6 +548,34 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: SS: Surface movement / airspeed scaling value
     { LOG_AETR_MSG, sizeof(log_AETR),
       "AETR", "Qfffffff",  "TimeUS,Ail,Elev,Thr,Rudd,Flap,Steer,SS", "s-------", "F-------" , true },
+
+// @LoggerMessage: GS
+// @Description: Datos utiles para el controlador de Gain Scheduling
+// @Field: TimeUS: Time since system startup
+// @Field: V_d: Valor de velocidad deseada en m/s
+// @Field: gamma_d: Valor de angulo de trayectoria deseado en rad
+// @Field: velx: velocidad en el sistema cuerpo para el eje x en m/s
+// @Field: velz: velocidad en el sistema cuerpo para el eje z en m/s
+// @Field: theta: angulo de cabeceo de la aeronave en rad
+// @Field: q: velocidad de cabeceo de la aeronave en rad/s
+// @Field: deltae: Surface movement / airspeed scaling value
+// @Field: deltaT: Surface movement / airspeed scaling value
+    { LOG_GS_MSG, sizeof(log_GS),
+        "GS", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
+
+// @LoggerMessage: LD
+// @Description: Datos utiles para el controlador de Logica difusa
+// @Field: TimeUS: Time since system startup
+// @Field: V_d: Valor de velocidad deseada en m/s
+// @Field: gamma_d: Valor de angulo de trayectoria deseado en rad
+// @Field: velx: velocidad en el sistema cuerpo para el eje x en m/s
+// @Field: velz: velocidad en el sistema cuerpo para el eje z en m/s
+// @Field: theta: angulo de cabeceo de la aeronave en rad
+// @Field: q: velocidad de cabeceo de la aeronave en rad/s
+// @Field: deltae: Surface movement / airspeed scaling value
+// @Field: deltaT: Surface movement / airspeed scaling value
+    { LOG_LD_MSG, sizeof(log_LD),
+        "LD", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
 
 #if AP_PLANE_OFFBOARD_GUIDED_SLEW_ENABLED
 // @LoggerMessage: OFG

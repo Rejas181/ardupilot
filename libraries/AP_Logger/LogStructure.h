@@ -151,6 +151,7 @@ const struct MultiplierStructure log_Multipliers[] = {
 #include <AP_Mission/LogStructure.h>
 #include <AP_Servo_Telem/LogStructure.h>
 
+
 // structure used to define logging format
 // It is packed on ChibiOS to save flash space; however, this causes problems
 // when building the SITL on an Apple M1 CPU (and is also slower) so we do not

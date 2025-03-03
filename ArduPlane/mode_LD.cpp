@@ -39,11 +39,13 @@ void ModeLD::update()
     vel_ang = ahrs.get_gyro();
     printf("velocidad angular corregida: %f, %f, %f,\n",vel_ang.x,vel_ang.y,vel_ang.z);
 
+    float theta=ahrs.get_pitch();
+
     //-------------controlador de ganancias programadas obtenido mediante MATLAB------------
     //Escritura de Variables de entrada
     Control.rtU.u=airspeed_vec_bf.x;
     Control.rtU.w=airspeed_vec_bf.z;
-    Control.rtU.theta=ahrs.get_pitch();
+    Control.rtU.theta=theta;
     Control.rtU.q=vel_ang.y;
     Control.rtU.gammad=gamma_d;
     Control.rtU.Vd=V_d;                                              //ajuste a velocidad maxima de 36 m/s
@@ -70,6 +72,8 @@ void ModeLD::update()
     SRV_Channels::set_output_scaled(SRV_Channel::k_elevator, pitch_out);                        //Salida del elevador set_output_pwm_chan
     output_rudder_and_steering(plane.rudder_in_expo(false));                                    //Salida manual del Timón (obtenida de: mode manual)
     SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, throttle_out);                     //Salida del acelerador
+
+    Plane::Log_Write_LD(V_d,gamma_d,airspeed_vec_bf.x,airspeed_vec_bf.z,theta,vel_ang.y,Control.rtY.de,Control.rtY.dT); //Escritura del registro
    
    
 }
