@@ -9,7 +9,7 @@
 //
 // Model version                  : 2.31
 // Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Fri Feb 21 18:43:09 2025
+// C/C++ source code generated on : Wed Feb 26 19:23:54 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -18,12 +18,10 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-#pragma GCC diagnostic ignored "-Wfloat-equal"
-#include "AP_gain_scheduling/controlador.h"
+#include "controlador.h"
 #include <cmath>
-#include "AP_gain_scheduling/rtwtypes.h"
+#include "rtwtypes.h"
 #include <stddef.h>
-#include <stdio.h>              // This example main program uses printf/fflush
 #define NumBitsPerChar                 8U
 
 extern real_T rt_atan2d_snf(real_T u0, real_T u1);
@@ -136,13 +134,13 @@ extern "C"
   // Test if value is infinite
   static boolean_T rtIsInf(real_T value)
   {
-    return (boolean_T)(((value)==rtInfF || (value)==rtMinusInfF) ? 1U : 0U);
+    return (boolean_T)((value==rtInf || value==rtMinusInf) ? 1U : 0U);
   }
 
   // Test if single-precision value is infinite
   static boolean_T rtIsInfF(real32_T value)
   {
-    return (boolean_T)(((value)==rtInfF || (value)==rtMinusInfF) ? 1U : 0U);    //(value)==rtInfF || (value)==rtMinusInfF
+    return (boolean_T)(((value)==rtInfF || (value)==rtMinusInfF) ? 1U : 0U);
   }
 
   // Test if value is not a number
@@ -620,7 +618,6 @@ void controlador::initialize()
 
   // initialize non-finites
   rt_InitInfAndNaN(sizeof(real_T));
-  printf("initializing controller");
 }
 
 // Constructor

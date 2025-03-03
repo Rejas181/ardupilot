@@ -9,7 +9,7 @@
 //
 // Model version                  : 2.31
 // Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Fri Feb 21 18:43:09 2025
+// C/C++ source code generated on : Wed Feb 26 19:23:54 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -20,7 +20,7 @@
 //
 #ifndef RTW_HEADER_controlador_h_
 #define RTW_HEADER_controlador_h_
-#include "AP_gain_scheduling/rtwtypes.h"
+#include "rtwtypes.h"
 #include <stddef.h>
 
 // Macros for accessing real-time model data structure
@@ -268,19 +268,19 @@ extern const controlador::ConstP rtConstP;
 //  MATLAB hilite_system command to trace the generated code back
 //  to the parent model.  For example,
 //
-//  hilite_system('gain_scheduling_simulacion_V_gam_/controlador')    - opens subsystem gain_scheduling_simulacion_V_gam_/controlador
-//  hilite_system('gain_scheduling_simulacion_V_gam_/controlador/Kp') - opens and selects block Kp
+//  hilite_system('gain_scheduling_simulacion_V_gam_FPV/controlador')    - opens subsystem gain_scheduling_simulacion_V_gam_FPV/controlador
+//  hilite_system('gain_scheduling_simulacion_V_gam_FPV/controlador/Kp') - opens and selects block Kp
 //
 //  Here is the system hierarchy for this model
 //
-//  '<Root>' : 'gain_scheduling_simulacion_V_gam_'
-//  '<S1>'   : 'gain_scheduling_simulacion_V_gam_/controlador'
-//  '<S2>'   : 'gain_scheduling_simulacion_V_gam_/controlador/MATLAB Function'
-//  '<S3>'   : 'gain_scheduling_simulacion_V_gam_/controlador/MATLAB Function2'
-//  '<S4>'   : 'gain_scheduling_simulacion_V_gam_/controlador/alphad'
-//  '<S5>'   : 'gain_scheduling_simulacion_V_gam_/controlador/selector'
-//  '<S6>'   : 'gain_scheduling_simulacion_V_gam_/controlador/alphad/MATLAB Function'
-//  '<S7>'   : 'gain_scheduling_simulacion_V_gam_/controlador/alphad/MATLAB Function1'
+//  '<Root>' : 'gain_scheduling_simulacion_V_gam_FPV'
+//  '<S1>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador'
+//  '<S2>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/MATLAB Function'
+//  '<S3>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/MATLAB Function2'
+//  '<S4>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/alphad'
+//  '<S5>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/selector'
+//  '<S6>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/alphad/MATLAB Function'
+//  '<S7>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/alphad/MATLAB Function1'
 
 #endif                                 // RTW_HEADER_controlador_h_
 

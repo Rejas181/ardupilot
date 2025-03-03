@@ -9,7 +9,7 @@
 //
 // Model version                  : 2.31
 // Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Fri Feb 21 18:43:09 2025
+// C/C++ source code generated on : Wed Feb 26 19:23:54 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -19,7 +19,7 @@
 // Validation result: Not run
 //
 #include <stdio.h>              // This example main program uses printf/fflush
-#include "AP_gain_scheduling/controlador.h"               // Model header file
+#include "controlador.h"               // Model header file
 
 static controlador rtObj;              // Instance of model class
 
