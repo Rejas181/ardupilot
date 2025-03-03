@@ -52,7 +52,8 @@ void ModeGS::update()
     //Escritura de variables de salida                      
     if(Control.rtY.de>0){pitch_out=Control.rtY.de*4500;}    //conversion de variable de salida dT a periodo en s
     else {pitch_out=Control.rtY.de-4500;}
-    throttle_out=Control.rtY.dT*4500;                        //conversion de variable de salida de a periodo en s (+30�-20�)
+    if {Control.rtY.dT<0}{throttle_out=0;}
+    else{throttle_out=Control.rtY.dT*4500;}                          //conversion de variable de salida de a periodo en s (+30�-20�)
     
     //variables en la estructura para monitoreo (en simulink y en el programa anterior)
     //wd=Control.rtY.wd;
