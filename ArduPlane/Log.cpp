@@ -282,6 +282,20 @@ void Plane::Log_Write_Guided(void)
 #endif // AP_PLANE_OFFBOARD_GUIDED_SLEW_ENABLED
 }
 
+
+struct PACKED log_GS {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float V_d;
+    float gamma_d;
+    float vel_x;
+    float vel_z;
+    float theta;
+    float q;
+    float delta_e;
+    float delta_T;
+};
+
 void Plane::Log_Write_GS(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT)
 {
     struct log_GS pkt = {
@@ -299,6 +313,22 @@ void Plane::Log_Write_GS(float V_d,float gamma_d, float vel_x, float vel_z, floa
 
     logger.WriteBlock(&pkt, sizeof(pkt));
 }
+
+
+
+struct PACKED log_LD {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float V_d;
+    float gamma_d;
+    float vel_x;
+    float vel_z;
+    float theta;
+    float q;
+    float delta_e;
+    float delta_T;
+};
+
 
 void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT)
 {
@@ -318,31 +348,8 @@ void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, floa
     logger.WriteBlock(&pkt, sizeof(pkt));
 }
 
-struct PACKED log_GS {
-    LOG_PACKET_HEADER;
-    uint64_t time_us;
-    float V_d;
-    float gamma_d;
-    float vel_x;
-    float vel_z;
-    float theta;
-    float q;
-    float delta_e;
-    float delta_T;
-};
 
-struct PACKED log_LD {
-    LOG_PACKET_HEADER;
-    uint64_t time_us;
-    float V_d;
-    float gamma_d;
-    float vel_x;
-    float vel_z;
-    float theta;
-    float q;
-    float delta_e;
-    float delta_T;
-};
+
 
 // incoming-to-vehicle mavlink COMMAND_INT can be logged
 struct PACKED log_CMDI {
