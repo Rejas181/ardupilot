@@ -580,7 +580,7 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: de: señal de control del elevador
 // @Field: dT: señal de control del acelerador
     { LOG_LD_MSG, sizeof(log_LD),
-        "LD", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
+        "LD", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F--------" , true },
 
 #if AP_PLANE_OFFBOARD_GUIDED_SLEW_ENABLED
 // @LoggerMessage: OFG
@@ -595,7 +595,7 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: HdgA: target heading lim
 // @Field: AltL: target alt frame (Location)
     { LOG_OFG_MSG, sizeof(log_OFG_Guided),     
-      "OFG", "QffffBffB",    "TimeUS,Arsp,ArspA,Alt,AltA,AltF,Hdg,HdgA,AltL", "snnmo-d--", "F--------" , true }, 
+      "OFG", "QffffBffB",    "TimeUS,Arsp,ArspA,Alt,AltA,AltF,Hdg,HdgA,AltL", "snnmo-d--", "F---------" , true }, 
 #endif
 };
 
