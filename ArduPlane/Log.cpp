@@ -566,7 +566,7 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: de: señal de control del elevador
 // @Field: dT: señal de control del acelerador
     { LOG_GS_MSG, sizeof(log_GS),
-        "GS", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
+        "GS", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F--------" , true },
 
 // @LoggerMessage: LD
 // @Description: Datos utiles para el controlador de Logica difusa
@@ -595,7 +595,7 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: HdgA: target heading lim
 // @Field: AltL: target alt frame (Location)
     { LOG_OFG_MSG, sizeof(log_OFG_Guided),     
-      "OFG", "QffffBffB",    "TimeUS,Arsp,ArspA,Alt,AltA,AltF,Hdg,HdgA,AltL", "snnmo-d--", "F---------" , true }, 
+      "OFG", "QffffBffB",    "TimeUS,Arsp,ArspA,Alt,AltA,AltF,Hdg,HdgA,AltL", "snnmo-d--", "F--------" , true }, 
 #endif
 };
 
