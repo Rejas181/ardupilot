@@ -304,7 +304,7 @@ void Plane::Log_Write_GS(float V_d,float gamma_d, float vel_x, float vel_z, floa
         ,V_d        : V_d
         ,gamma_d    : gamma_d
         ,vel_x      : vel_x
-        ,vel_y      : vel_z
+        ,vel_z      : vel_z
         ,theta      : theta
         ,q          : q
         ,deltae     : de
@@ -338,7 +338,7 @@ void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, floa
         ,V_d        : V_d
         ,gamma_d    : gamma_d
         ,vel_x      : vel_x
-        ,vel_y      : vel_z
+        ,vel_z      : vel_z
         ,theta      : theta
         ,q          : q
         ,deltae     : de
