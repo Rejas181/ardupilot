@@ -955,8 +955,8 @@ private:
     void Log_Write_RC(void);
     void Log_Write_Vehicle_Startup_Messages();
     void Log_Write_AETR();
-    void Log_Write_GS();
-    void Log_Write_LD();
+    void Log_Write_GS(float V_d, float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT);
+    void Log_Write_LD(float V_d, float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT);
 #endif
 
     // Parameters.cpp
