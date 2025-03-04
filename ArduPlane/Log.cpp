@@ -292,8 +292,8 @@ struct PACKED log_GS {
     float vel_z;
     float theta;
     float q;
-    float delta_e;
-    float delta_T;
+    float de;
+    float dT;
 };
 
 void Plane::Log_Write_GS(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT)
@@ -341,8 +341,8 @@ void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, floa
         ,vel_z      : vel_z
         ,theta      : theta
         ,q          : q
-        ,deltae     : de
-        ,deltaT     : dT
+        ,de     : de
+        ,dT     : dT
         };
 
     logger.WriteBlock(&pkt, sizeof(pkt));
@@ -563,8 +563,8 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: velz: velocidad en el sistema cuerpo para el eje z en m/s
 // @Field: theta: angulo de cabeceo de la aeronave en rad
 // @Field: q: velocidad de cabeceo de la aeronave en rad/s
-// @Field: de: Surface movement / airspeed scaling value
-// @Field: dT: Surface movement / airspeed scaling value
+// @Field: de: señal de control del elevador
+// @Field: dT: señal de control del acelerador
     { LOG_GS_MSG, sizeof(log_GS),
         "GS", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
 
@@ -577,8 +577,8 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: velz: velocidad en el sistema cuerpo para el eje z en m/s
 // @Field: theta: angulo de cabeceo de la aeronave en rad
 // @Field: q: velocidad de cabeceo de la aeronave en rad/s
-// @Field: de: Surface movement / airspeed scaling value
-// @Field: dT: Surface movement / airspeed scaling value
+// @Field: de: señal de control del elevador
+// @Field: dT: señal de control del acelerador
     { LOG_LD_MSG, sizeof(log_LD),
         "LD", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
 
