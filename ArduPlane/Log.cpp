@@ -563,8 +563,8 @@ const struct LogStructure Plane::log_structure[] = {
 // @Field: velz: velocidad en el sistema cuerpo para el eje z en m/s
 // @Field: theta: angulo de cabeceo de la aeronave en rad
 // @Field: q: velocidad de cabeceo de la aeronave en rad/s
-// @Field: deltae: Surface movement / airspeed scaling value
-// @Field: deltaT: Surface movement / airspeed scaling value
+// @Field: de: Surface movement / airspeed scaling value
+// @Field: dT: Surface movement / airspeed scaling value
     { LOG_GS_MSG, sizeof(log_GS),
         "GS", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F-------" , true },
 
