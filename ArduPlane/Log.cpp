@@ -307,8 +307,8 @@ void Plane::Log_Write_GS(float V_d,float gamma_d, float vel_x, float vel_z, floa
         ,vel_z      : vel_z
         ,theta      : theta
         ,q          : q
-        ,deltae     : de
-        ,deltaT     : dT
+        ,de         : de
+        ,dT         : dT
         };
 
     logger.WriteBlock(&pkt, sizeof(pkt));
