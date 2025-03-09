@@ -3,7 +3,7 @@
 #include <AP_HAL/AP_HAL_Boards.h>
 
 #ifndef AP_RADIO_ENABLED
-#define AP_RADIO_ENABLED 0
+#define AP_RADIO_ENABLED 1
 #endif
 
 #ifndef AP_RADIO_BACKEND_DEFAULT_ENABLED
