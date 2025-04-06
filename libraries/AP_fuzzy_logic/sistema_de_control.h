@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'sistema_de_control'.
 //
-// Model version                  : 2.39
-// Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Wed Feb 26 19:27:43 2025
+// Model version                  : 2.40
+// Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
+// C/C++ source code generated on : Wed Apr  2 20:11:46 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -18,27 +18,16 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-#ifndef RTW_HEADER_sistema_de_control_h_
-#define RTW_HEADER_sistema_de_control_h_
+#ifndef sistema_de_control_h_
+#define sistema_de_control_h_
+#include <cmath>
 #include "rtwtypes.h"
-#include <stddef.h>
-
-// Macros for accessing real-time model data structure
-#ifndef rtmGetErrorStatus
-#define rtmGetErrorStatus(rtm)         ((rtm)->errorStatus)
-#endif
-
-#ifndef rtmSetErrorStatus
-#define rtmSetErrorStatus(rtm, val)    ((rtm)->errorStatus = (val))
-#endif
 
 extern "C"
 {
   static real_T rtGetNaN(void);
   static real32_T rtGetNaNF(void);
 }                                      // extern "C"
-
-#define NOT_USING_NONFINITE_LITERALS   1
 
 extern "C"
 {
@@ -48,39 +37,10 @@ extern "C"
   extern real32_T rtInfF;
   extern real32_T rtMinusInfF;
   extern real32_T rtNaNF;
-  static void rt_InitInfAndNaN(size_t realSize);
   static boolean_T rtIsInf(real_T value);
   static boolean_T rtIsInfF(real32_T value);
   static boolean_T rtIsNaN(real_T value);
   static boolean_T rtIsNaNF(real32_T value);
-  struct BigEndianIEEEDouble {
-    struct {
-      uint32_T wordH;
-      uint32_T wordL;
-    } words;
-  };
-
-  struct LittleEndianIEEEDouble {
-    struct {
-      uint32_T wordL;
-      uint32_T wordH;
-    } words;
-  };
-
-  struct IEEESingle {
-    union {
-      real32_T wordLreal;
-      uint32_T wordLuint;
-    } wordL;
-  };
-}                                      // extern "C"
-
-extern "C"
-{
-  static real_T rtGetInf(void);
-  static real32_T rtGetInfF(void);
-  static real_T rtGetMinusInf(void);
-  static real32_T rtGetMinusInfF(void);
 }                                      // extern "C"
 
 // Class declaration for model sistema_de_control
@@ -227,6 +187,8 @@ class sistema_de_control final
   // Real-time Model Data Structure
   struct RT_MODEL {
     const char_T * volatile errorStatus;
+    const char_T* getErrorStatus() const;
+    void setErrorStatus(const char_T* const volatile aErrorStatus);
   };
 
   // Copy Constructor
@@ -251,7 +213,7 @@ class sistema_de_control final
   ExtY rtY;
 
   // model initialize function
-  void initialize();
+  static void initialize();
 
   // model step function
   void step();
@@ -324,7 +286,7 @@ extern const sistema_de_control::ConstP rtConstP;
 //  '<S17>'  : 'Logica_Difusa_simulacion_V_gam_ACTUAL/sistema_de_control/selector//memebresia/Punto3/generador de matriz'
 //  '<S18>'  : 'Logica_Difusa_simulacion_V_gam_ACTUAL/sistema_de_control/selector//memebresia/Punto4/generador de matriz'
 
-#endif                                 // RTW_HEADER_sistema_de_control_h_
+#endif                                 // sistema_de_control_h_
 
 //
 // File trailer for generated code.

@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'controlador'.
 //
-// Model version                  : 2.31
-// Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Wed Feb 26 19:23:54 2025
+// Model version                  : 4.2
+// Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
+// C/C++ source code generated on : Wed Apr  2 19:07:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -18,27 +18,16 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-#ifndef RTW_HEADER_controlador_h_
-#define RTW_HEADER_controlador_h_
+#ifndef controlador_h_
+#define controlador_h_
+#include <cmath>
 #include "rtwtypes.h"
-#include <stddef.h>
-
-// Macros for accessing real-time model data structure
-#ifndef rtmGetErrorStatus
-#define rtmGetErrorStatus(rtm)         ((rtm)->errorStatus)
-#endif
-
-#ifndef rtmSetErrorStatus
-#define rtmSetErrorStatus(rtm, val)    ((rtm)->errorStatus = (val))
-#endif
 
 extern "C"
 {
   static real_T rtGetNaN(void);
   static real32_T rtGetNaNF(void);
 }                                      // extern "C"
-
-#define NOT_USING_NONFINITE_LITERALS   1
 
 extern "C"
 {
@@ -48,39 +37,10 @@ extern "C"
   extern real32_T rtInfF;
   extern real32_T rtMinusInfF;
   extern real32_T rtNaNF;
-  static void rt_InitInfAndNaN(size_t realSize);
   static boolean_T rtIsInf(real_T value);
   static boolean_T rtIsInfF(real32_T value);
   static boolean_T rtIsNaN(real_T value);
   static boolean_T rtIsNaNF(real32_T value);
-  struct BigEndianIEEEDouble {
-    struct {
-      uint32_T wordH;
-      uint32_T wordL;
-    } words;
-  };
-
-  struct LittleEndianIEEEDouble {
-    struct {
-      uint32_T wordL;
-      uint32_T wordH;
-    } words;
-  };
-
-  struct IEEESingle {
-    union {
-      real32_T wordLreal;
-      uint32_T wordLuint;
-    } wordL;
-  };
-}                                      // extern "C"
-
-extern "C"
-{
-  static real_T rtGetInf(void);
-  static real32_T rtGetInfF(void);
-  static real_T rtGetMinusInf(void);
-  static real32_T rtGetMinusInfF(void);
 }                                      // extern "C"
 
 // Class declaration for model controlador
@@ -91,84 +51,84 @@ class controlador final
   // Constant parameters (default storage)
   struct ConstP {
     // Expression: Vind
-    //  Referenced by: '<S4>/Constant'
+    //  Referenced by: '<S6>/Constant'
 
     real_T Constant_Value[26];
 
     // Pooled Parameter (Expression: [gammali:pgamma:gammals])
     //  Referenced by:
-    //    '<S4>/gamma_lookup1'
-    //    '<S5>/gamma_lookup'
+    //    '<S6>/gamma_lookup1'
+    //    '<S7>/gamma_lookup'
 
     real_T pooled1[13];
 
     // Pooled Parameter (Expression: [Vli:pV:Vls])
     //  Referenced by:
-    //    '<S4>/V_lookup1'
-    //    '<S4>/V_lookup2'
-    //    '<S5>/V_lookup'
+    //    '<S6>/V_lookup1'
+    //    '<S6>/V_lookup2'
+    //    '<S7>/V_lookup'
 
     real_T pooled2[14];
 
     // Pooled Parameter (Expression: Peq_dT)
     //  Referenced by:
-    //    '<S4>/Peq_dT'
-    //    '<S5>/Peq_dT'
+    //    '<S6>/Peq_dT'
+    //    '<S7>/Peq_dT'
 
     real_T pooled3[182];
 
     // Expression: Peq_alpha
-    //  Referenced by: '<S4>/Peq_alpha'
+    //  Referenced by: '<S6>/Peq_alpha'
 
     real_T Peq_alpha_Table[182];
 
     // Expression: k1de
-    //  Referenced by: '<S5>/k1de'
+    //  Referenced by: '<S7>/k1de'
 
     real_T k1de_Table[182];
 
     // Expression: k2de
-    //  Referenced by: '<S5>/k2de'
+    //  Referenced by: '<S7>/k2de'
 
     real_T k2de_Table[182];
 
     // Expression: k3de
-    //  Referenced by: '<S5>/k3de'
+    //  Referenced by: '<S7>/k3de'
 
     real_T k3de_Table[182];
 
     // Expression: k4de
-    //  Referenced by: '<S5>/k4de'
+    //  Referenced by: '<S7>/k4de'
 
     real_T k4de_Table[182];
 
     // Expression: k1dT
-    //  Referenced by: '<S5>/k1dT'
+    //  Referenced by: '<S7>/k1dT'
 
     real_T k1dT_Table[182];
 
     // Expression: k2dT
-    //  Referenced by: '<S5>/k2dT'
+    //  Referenced by: '<S7>/k2dT'
 
     real_T k2dT_Table[182];
 
     // Expression: k3dT
-    //  Referenced by: '<S5>/k3dT'
+    //  Referenced by: '<S7>/k3dT'
 
     real_T k3dT_Table[182];
 
     // Expression: k4dT
-    //  Referenced by: '<S5>/k4dT'
+    //  Referenced by: '<S7>/k4dT'
 
     real_T k4dT_Table[182];
 
     // Expression: Peq_de
-    //  Referenced by: '<S5>/Peq_de'
+    //  Referenced by: '<S7>/Peq_de'
 
     real_T Peq_de_Table[182];
 
     // Expression: Peq_w
-    //  Referenced by: '<S5>/Peq_wd'
+    //  Referenced by: '<S7>/Peq_wd'
 
     real_T Peq_wd_Table[182];
   };
@@ -206,6 +166,9 @@ class controlador final
         uint8_T TID[2];
       } TaskCounters;
     } Timing;
+
+    const char_T* getErrorStatus() const;
+    void setErrorStatus(const char_T* const volatile aErrorStatus);
   };
 
   // Copy Constructor
@@ -230,7 +193,7 @@ class controlador final
   ExtY rtY;
 
   // model initialize function
-  void initialize();
+  static void initialize();
 
   // model step function
   void step();
@@ -253,7 +216,9 @@ extern const controlador::ConstP rtConstP;
 //-
 //  These blocks were eliminated from the model due to optimizations:
 //
-//  Block '<S4>/Scope' : Unused code path elimination
+//  Block '<S1>/Scope' : Unused code path elimination
+//  Block '<S1>/Scope1' : Unused code path elimination
+//  Block '<S6>/Scope' : Unused code path elimination
 
 
 //-
@@ -268,21 +233,23 @@ extern const controlador::ConstP rtConstP;
 //  MATLAB hilite_system command to trace the generated code back
 //  to the parent model.  For example,
 //
-//  hilite_system('gain_scheduling_simulacion_V_gam_FPV/controlador')    - opens subsystem gain_scheduling_simulacion_V_gam_FPV/controlador
-//  hilite_system('gain_scheduling_simulacion_V_gam_FPV/controlador/Kp') - opens and selects block Kp
+//  hilite_system('gain_scheduling_simulacion_V_gam_Actual/controlador')    - opens subsystem gain_scheduling_simulacion_V_gam_Actual/controlador
+//  hilite_system('gain_scheduling_simulacion_V_gam_Actual/controlador/Kp') - opens and selects block Kp
 //
 //  Here is the system hierarchy for this model
 //
-//  '<Root>' : 'gain_scheduling_simulacion_V_gam_FPV'
-//  '<S1>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador'
-//  '<S2>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/MATLAB Function'
-//  '<S3>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/MATLAB Function2'
-//  '<S4>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/alphad'
-//  '<S5>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/selector'
-//  '<S6>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/alphad/MATLAB Function'
-//  '<S7>'   : 'gain_scheduling_simulacion_V_gam_FPV/controlador/alphad/MATLAB Function1'
+//  '<Root>' : 'gain_scheduling_simulacion_V_gam_Actual'
+//  '<S1>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador'
+//  '<S2>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/Ajuste de salida para implementacion dT'
+//  '<S3>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/Ajuste de salida para implementacion de'
+//  '<S4>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/MATLAB Function'
+//  '<S5>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/MATLAB Function2'
+//  '<S6>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/alphad'
+//  '<S7>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/selector'
+//  '<S8>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/alphad/MATLAB Function'
+//  '<S9>'   : 'gain_scheduling_simulacion_V_gam_Actual/controlador/alphad/MATLAB Function1'
 
-#endif                                 // RTW_HEADER_controlador_h_
+#endif                                 // controlador_h_
 
 //
 // File trailer for generated code.

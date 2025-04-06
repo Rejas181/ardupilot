@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'sistema_de_control'.
 //
-// Model version                  : 2.39
-// Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Wed Feb 26 19:27:43 2025
+// Model version                  : 2.40
+// Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
+// C/C++ source code generated on : Wed Apr  2 20:11:46 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -18,13 +18,11 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-
-#pragma GCC diagnostic ignored "-Wfloat-equal"
 #include "sistema_de_control.h"
 #include "rtwtypes.h"
 #include <cmath>
-#include <stddef.h>
-#define NumBitsPerChar                 8U
+#include "cmath"
+#include "limits"
 
 extern real_T rt_atan2d_snf(real_T u0, real_T u1);
 static uint32_T plook_binx(real_T u, const real_T bp[], uint32_T maxIndex,
@@ -63,196 +61,61 @@ static uint32_T binsearch_u32d(real_T u, const real_T bp[], uint32_T startIndex,
 #define UNUSED_PARAMETER(x)            (void) (x)
 #endif
 #endif
-/*
+
 extern "C"
 {
-  real_T rtInf;
-  real_T rtMinusInf;
-  real_T rtNaN;
-  real32_T rtInfF;
-  real32_T rtMinusInfF;
-  real32_T rtNaNF;
+  real_T rtNaN { -std::numeric_limits<real_T>::quiet_NaN() };
+
+  real_T rtInf { std::numeric_limits<real_T>::infinity() };
+
+  real_T rtMinusInf { -std::numeric_limits<real_T>::infinity() };
+
+  real32_T rtNaNF { -std::numeric_limits<real32_T>::quiet_NaN() };
+
+  real32_T rtInfF { std::numeric_limits<real32_T>::infinity() };
+
+  real32_T rtMinusInfF { -std::numeric_limits<real32_T>::infinity() };
 }
-*/
+
 extern "C"
 {
-  //
-  // Initialize rtNaN needed by the generated code.
-  // NaN is initialized as non-signaling. Assumes IEEE.
-  //
+  // Return rtNaN needed by the generated code.
   static real_T rtGetNaN(void)
   {
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    real_T nan{ 0.0 };
-
-    if (bitsPerReal == 32U) {
-      nan = rtGetNaNF();
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.bitVal.words.wordH = 0xFFF80000U;
-      tmpVal.bitVal.words.wordL = 0x00000000U;
-      nan = tmpVal.fltVal;
-    }
-
-    return nan;
+    return rtNaN;
   }
 
-  //
-  // Initialize rtNaNF needed by the generated code.
-  // NaN is initialized as non-signaling. Assumes IEEE.
-  //
+  // Return rtNaNF needed by the generated code.
   static real32_T rtGetNaNF(void)
   {
-    IEEESingle nanF{ { 0.0F } };
-
-    nanF.wordL.wordLuint = 0xFFC00000U;
-    return nanF.wordL.wordLreal;
+    return rtNaNF;
   }
 }
 
 extern "C"
 {
-  //
-  // Initialize the rtInf, rtMinusInf, and rtNaN needed by the
-  // generated code. NaN is initialized as non-signaling. Assumes IEEE.
-  //
-  static void rt_InitInfAndNaN(size_t realSize)
-  {
-    (void) (realSize);
-    rtNaN = rtGetNaN();
-    rtNaNF = rtGetNaNF();
-    rtInf = rtGetInf();
-    rtInfF = rtGetInfF();
-    rtMinusInf = rtGetMinusInf();
-    rtMinusInfF = rtGetMinusInfF();
-  }
-
   // Test if value is infinite
   static boolean_T rtIsInf(real_T value)
   {
-    return (boolean_T)((value==rtInf || value==rtMinusInf) ? 1U : 0U);
+    return std::isinf(value);
   }
 
   // Test if single-precision value is infinite
   static boolean_T rtIsInfF(real32_T value)
   {
-    return (boolean_T)(((value)==rtInfF || (value)==rtMinusInfF) ? 1U : 0U);
+    return std::isinf(value);
   }
 
   // Test if value is not a number
   static boolean_T rtIsNaN(real_T value)
   {
-    boolean_T result{ (boolean_T) 0 };
-
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    if (bitsPerReal == 32U) {
-      result = rtIsNaNF((real32_T)value);
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.fltVal = value;
-      result = (boolean_T)((tmpVal.bitVal.words.wordH & 0x7FF00000) ==
-                           0x7FF00000 &&
-                           ( (tmpVal.bitVal.words.wordH & 0x000FFFFF) != 0 ||
-                            (tmpVal.bitVal.words.wordL != 0) ));
-    }
-
-    return result;
+    return std::isnan(value);
   }
 
   // Test if single-precision value is not a number
   static boolean_T rtIsNaNF(real32_T value)
   {
-    IEEESingle tmp;
-    tmp.wordL.wordLreal = value;
-    return (boolean_T)( (tmp.wordL.wordLuint & 0x7F800000) == 0x7F800000 &&
-                       (tmp.wordL.wordLuint & 0x007FFFFF) != 0 );
-  }
-}
-
-extern "C"
-{
-  //
-  // Initialize rtInf needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real_T rtGetInf(void)
-  {
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    real_T inf{ 0.0 };
-
-    if (bitsPerReal == 32U) {
-      inf = rtGetInfF();
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.bitVal.words.wordH = 0x7FF00000U;
-      tmpVal.bitVal.words.wordL = 0x00000000U;
-      inf = tmpVal.fltVal;
-    }
-
-    return inf;
-  }
-
-  //
-  // Initialize rtInfF needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real32_T rtGetInfF(void)
-  {
-    IEEESingle infF;
-    infF.wordL.wordLuint = 0x7F800000U;
-    return infF.wordL.wordLreal;
-  }
-
-  //
-  // Initialize rtMinusInf needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real_T rtGetMinusInf(void)
-  {
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    real_T minf{ 0.0 };
-
-    if (bitsPerReal == 32U) {
-      minf = rtGetMinusInfF();
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.bitVal.words.wordH = 0xFFF00000U;
-      tmpVal.bitVal.words.wordL = 0x00000000U;
-      minf = tmpVal.fltVal;
-    }
-
-    return minf;
-  }
-
-  //
-  // Initialize rtMinusInfF needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real32_T rtGetMinusInfF(void)
-  {
-    IEEESingle minfF;
-    minfF.wordL.wordLuint = 0xFF800000U;
-    return minfF.wordL.wordLreal;
+    return std::isnan(value);
   }
 }
 
@@ -344,7 +207,7 @@ void sistema_de_control::generadordematriz(real_T rtu_k1e, real_T rtu_k2e,
   rty_K1[5] = rtu_k3dT;
   rty_K1[7] = rtu_k4dT;
 }
-/*
+
 real_T rt_atan2d_snf(real_T u0, real_T u1)
 {
   real_T y;
@@ -380,14 +243,14 @@ real_T rt_atan2d_snf(real_T u0, real_T u1)
 
   return y;
 }
-*/
+
 // Model step function
 void sistema_de_control::step()
 {
   real_T rtb_K1[8];
-  real_T rtb_K1_d[8];
-  real_T rtb_K1_n[8];
-  real_T rtb_K1_p[8];
+  real_T rtb_K1_b[8];
+  real_T rtb_K1_c[8];
+  real_T rtb_K1_h[8];
   real_T frac[2];
   real_T frac_0[2];
   real_T frac_1[2];
@@ -563,7 +426,7 @@ void sistema_de_control::step()
                     (bpIndex_3, frac_3, rtConstP.pooled8, 13U), intrp2d_g
                     (bpIndex_4, frac_4, rtConstP.pooled9, 13U), intrp2d_g
                     (bpIndex_5, frac_5, rtConstP.pooled10, 13U), intrp2d_g
-                    (bpIndex_6, frac_6, rtConstP.pooled11, 13U), rtb_K1_p);
+                    (bpIndex_6, frac_6, rtConstP.pooled11, 13U), rtb_K1_b);
 
   // Interpolation_n-D: '<S12>/k1de'
   frac_7[0] = 0.0;
@@ -575,105 +438,63 @@ void sistema_de_control::step()
   frac_8[1] = 0.0;
   bpIndex_8[0] = rtb_gamma_lookup_o1;
 
-  // Interpolation_n-D: '<S12>/k1de' incorporates:
-  //   Constant: '<S12>/Constant'
-  //   Sum: '<S12>/Sum'
-
-  if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
-    bpIndex_7[1] = 12U;
-  } else {
-    bpIndex_7[1] = rtb_V_lookup_o1 + 1U;
-  }
-
   // Interpolation_n-D: '<S12>/k3de'
   frac_9[0] = 0.0;
   frac_9[1] = 0.0;
   bpIndex_9[0] = rtb_gamma_lookup_o1;
-
-  // Interpolation_n-D: '<S12>/k2de' incorporates:
-  //   Constant: '<S12>/Constant'
-  //   Sum: '<S12>/Sum'
-
-  if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
-    bpIndex_8[1] = 12U;
-  } else {
-    bpIndex_8[1] = rtb_V_lookup_o1 + 1U;
-  }
 
   // Interpolation_n-D: '<S12>/k4de'
   frac_a[0] = 0.0;
   frac_a[1] = 0.0;
   bpIndex_a[0] = rtb_gamma_lookup_o1;
 
-  // Interpolation_n-D: '<S12>/k3de' incorporates:
-  //   Constant: '<S12>/Constant'
-  //   Sum: '<S12>/Sum'
-
-  if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
-    bpIndex_9[1] = 12U;
-  } else {
-    bpIndex_9[1] = rtb_V_lookup_o1 + 1U;
-  }
-
   // Interpolation_n-D: '<S12>/k1dT'
   frac_b[0] = 0.0;
   frac_b[1] = 0.0;
   bpIndex_b[0] = rtb_gamma_lookup_o1;
-
-  // Interpolation_n-D: '<S12>/k4de' incorporates:
-  //   Constant: '<S12>/Constant'
-  //   Sum: '<S12>/Sum'
-
-  if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
-    bpIndex_a[1] = 12U;
-  } else {
-    bpIndex_a[1] = rtb_V_lookup_o1 + 1U;
-  }
 
   // Interpolation_n-D: '<S12>/k2dT'
   frac_c[0] = 0.0;
   frac_c[1] = 0.0;
   bpIndex_c[0] = rtb_gamma_lookup_o1;
 
-  // Interpolation_n-D: '<S12>/k1dT' incorporates:
-  //   Constant: '<S12>/Constant'
-  //   Sum: '<S12>/Sum'
-
-  if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
-    bpIndex_b[1] = 12U;
-  } else {
-    bpIndex_b[1] = rtb_V_lookup_o1 + 1U;
-  }
-
   // Interpolation_n-D: '<S12>/k3dT'
   frac_d[0] = 0.0;
   frac_d[1] = 0.0;
   bpIndex_d[0] = rtb_gamma_lookup_o1;
-
-  // Interpolation_n-D: '<S12>/k2dT' incorporates:
-  //   Constant: '<S12>/Constant'
-  //   Sum: '<S12>/Sum'
-
-  if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
-    bpIndex_c[1] = 12U;
-  } else {
-    bpIndex_c[1] = rtb_V_lookup_o1 + 1U;
-  }
 
   // Interpolation_n-D: '<S12>/k4dT'
   frac_e[0] = 0.0;
   frac_e[1] = 0.0;
   bpIndex_e[0] = rtb_gamma_lookup_o1;
 
-  // Interpolation_n-D: '<S12>/k3dT' incorporates:
+  // Interpolation_n-D: '<S12>/k1de' incorporates:
   //   Constant: '<S12>/Constant'
+  //   Interpolation_n-D: '<S12>/k1dT'
+  //   Interpolation_n-D: '<S12>/k2dT'
+  //   Interpolation_n-D: '<S12>/k2de'
+  //   Interpolation_n-D: '<S12>/k3dT'
+  //   Interpolation_n-D: '<S12>/k3de'
   //   Interpolation_n-D: '<S12>/k4dT'
+  //   Interpolation_n-D: '<S12>/k4de'
   //   Sum: '<S12>/Sum'
 
   if (static_cast<real_T>(rtb_V_lookup_o1) + 1.0 > 12.0) {
+    bpIndex_7[1] = 12U;
+    bpIndex_8[1] = 12U;
+    bpIndex_9[1] = 12U;
+    bpIndex_a[1] = 12U;
+    bpIndex_b[1] = 12U;
+    bpIndex_c[1] = 12U;
     bpIndex_d[1] = 12U;
     bpIndex_e[1] = 12U;
   } else {
+    bpIndex_7[1] = rtb_V_lookup_o1 + 1U;
+    bpIndex_8[1] = rtb_V_lookup_o1 + 1U;
+    bpIndex_9[1] = rtb_V_lookup_o1 + 1U;
+    bpIndex_a[1] = rtb_V_lookup_o1 + 1U;
+    bpIndex_b[1] = rtb_V_lookup_o1 + 1U;
+    bpIndex_c[1] = rtb_V_lookup_o1 + 1U;
     bpIndex_d[1] = rtb_V_lookup_o1 + 1U;
     bpIndex_e[1] = rtb_V_lookup_o1 + 1U;
   }
@@ -696,11 +517,16 @@ void sistema_de_control::step()
                     intrp2d_g(bpIndex_c, frac_c, rtConstP.pooled9, 13U),
                     intrp2d_g(bpIndex_d, frac_d, rtConstP.pooled10, 13U),
                     intrp2d_g(bpIndex_e, frac_e, rtConstP.pooled11, 13U),
-                    rtb_K1_n);
+                    rtb_K1_h);
 
   // Interpolation_n-D: '<S13>/k1de' incorporates:
   //   Constant: '<S13>/Constant'
+  //   Interpolation_n-D: '<S13>/k1dT'
+  //   Interpolation_n-D: '<S13>/k2dT'
   //   Interpolation_n-D: '<S13>/k2de'
+  //   Interpolation_n-D: '<S13>/k3dT'
+  //   Interpolation_n-D: '<S13>/k3de'
+  //   Interpolation_n-D: '<S13>/k4de'
   //   Sum: '<S13>/Sum'
 
   frac_f[0] = 0.0;
@@ -708,9 +534,19 @@ void sistema_de_control::step()
   if (static_cast<real_T>(rtb_gamma_lookup_o1) + 1.0 > 11.0) {
     bpIndex_f[0] = 11U;
     bpIndex_g[0] = 11U;
+    bpIndex_h[0] = 11U;
+    bpIndex_i[0] = 11U;
+    bpIndex_j[0] = 11U;
+    bpIndex_k[0] = 11U;
+    bpIndex_l[0] = 11U;
   } else {
     bpIndex_f[0] = rtb_gamma_lookup_o1 + 1U;
     bpIndex_g[0] = rtb_gamma_lookup_o1 + 1U;
+    bpIndex_h[0] = rtb_gamma_lookup_o1 + 1U;
+    bpIndex_i[0] = rtb_gamma_lookup_o1 + 1U;
+    bpIndex_j[0] = rtb_gamma_lookup_o1 + 1U;
+    bpIndex_k[0] = rtb_gamma_lookup_o1 + 1U;
+    bpIndex_l[0] = rtb_gamma_lookup_o1 + 1U;
   }
 
   bpIndex_f[1] = rtb_V_lookup_o1;
@@ -720,21 +556,9 @@ void sistema_de_control::step()
   frac_g[1] = 0.0;
   bpIndex_g[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S13>/k3de' incorporates:
-  //   Constant: '<S13>/Constant'
-  //   Interpolation_n-D: '<S13>/k4de'
-  //   Sum: '<S13>/Sum'
-
+  // Interpolation_n-D: '<S13>/k3de'
   frac_h[0] = 0.0;
   frac_h[1] = 0.0;
-  if (static_cast<real_T>(rtb_gamma_lookup_o1) + 1.0 > 11.0) {
-    bpIndex_h[0] = 11U;
-    bpIndex_i[0] = 11U;
-  } else {
-    bpIndex_h[0] = rtb_gamma_lookup_o1 + 1U;
-    bpIndex_i[0] = rtb_gamma_lookup_o1 + 1U;
-  }
-
   bpIndex_h[1] = rtb_V_lookup_o1;
 
   // Interpolation_n-D: '<S13>/k4de'
@@ -742,21 +566,9 @@ void sistema_de_control::step()
   frac_i[1] = 0.0;
   bpIndex_i[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S13>/k1dT' incorporates:
-  //   Constant: '<S13>/Constant'
-  //   Interpolation_n-D: '<S13>/k2dT'
-  //   Sum: '<S13>/Sum'
-
+  // Interpolation_n-D: '<S13>/k1dT'
   frac_j[0] = 0.0;
   frac_j[1] = 0.0;
-  if (static_cast<real_T>(rtb_gamma_lookup_o1) + 1.0 > 11.0) {
-    bpIndex_j[0] = 11U;
-    bpIndex_k[0] = 11U;
-  } else {
-    bpIndex_j[0] = rtb_gamma_lookup_o1 + 1U;
-    bpIndex_k[0] = rtb_gamma_lookup_o1 + 1U;
-  }
-
   bpIndex_j[1] = rtb_V_lookup_o1;
 
   // Interpolation_n-D: '<S13>/k2dT'
@@ -764,18 +576,9 @@ void sistema_de_control::step()
   frac_k[1] = 0.0;
   bpIndex_k[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S13>/k3dT' incorporates:
-  //   Constant: '<S13>/Constant'
-  //   Sum: '<S13>/Sum'
-
+  // Interpolation_n-D: '<S13>/k3dT'
   frac_l[0] = 0.0;
   frac_l[1] = 0.0;
-  if (static_cast<real_T>(rtb_gamma_lookup_o1) + 1.0 > 11.0) {
-    bpIndex_l[0] = 11U;
-  } else {
-    bpIndex_l[0] = rtb_gamma_lookup_o1 + 1U;
-  }
-
   bpIndex_l[1] = rtb_V_lookup_o1;
 
   // Interpolation_n-D: '<S13>/k4dT'
@@ -802,7 +605,7 @@ void sistema_de_control::step()
                     intrp2d_g(bpIndex_k, frac_k, rtConstP.pooled9, 13U),
                     intrp2d_g(bpIndex_l, frac_l, rtConstP.pooled10, 13U),
                     intrp2d_g(bpIndex_m, frac_m, rtConstP.pooled11, 13U),
-                    rtb_K1_d);
+                    rtb_K1_c);
 
   // Interpolation_n-D: '<S14>/k1de' incorporates:
   //   Constant: '<S14>/Constant'
@@ -1129,13 +932,13 @@ void sistema_de_control::step()
   rtb_V_lookup2_o2 = rtU.w - rtb_gamma_lookup_o2;
   g3 = rtU.theta - (rtb_gamma_lookup1_o2 + g3);
   for (i = 0; i < 2; i++) {
-    frac[i] = -((((((rtb_K1_p[i + 2] * g1 * rtb_V_lookup2_o2 + g1 * rtb_K1_p[i] *
-                     rtb_V_lookup_o2) + rtb_K1_p[i + 4] * g1 * g3) + rtb_K1_p[i
-                   + 6] * g1 * rtU.q) + (((rtb_K1_n[i + 2] * rtb_mu_idx_1 *
-      rtb_V_lookup2_o2 + rtb_mu_idx_1 * rtb_K1_n[i] * rtb_V_lookup_o2) +
-      rtb_K1_n[i + 4] * rtb_mu_idx_1 * g3) + rtb_K1_n[i + 6] * rtb_mu_idx_1 *
-      rtU.q)) + (((rtb_K1_d[i + 2] * w2 * rtb_V_lookup2_o2 + w2 * rtb_K1_d[i] *
-                   rtb_V_lookup_o2) + rtb_K1_d[i + 4] * w2 * g3) + rtb_K1_d[i +
+    frac[i] = -((((((rtb_K1_b[i + 2] * g1 * rtb_V_lookup2_o2 + g1 * rtb_K1_b[i] *
+                     rtb_V_lookup_o2) + rtb_K1_b[i + 4] * g1 * g3) + rtb_K1_b[i
+                   + 6] * g1 * rtU.q) + (((rtb_K1_h[i + 2] * rtb_mu_idx_1 *
+      rtb_V_lookup2_o2 + rtb_mu_idx_1 * rtb_K1_h[i] * rtb_V_lookup_o2) +
+      rtb_K1_h[i + 4] * rtb_mu_idx_1 * g3) + rtb_K1_h[i + 6] * rtb_mu_idx_1 *
+      rtU.q)) + (((rtb_K1_c[i + 2] * w2 * rtb_V_lookup2_o2 + w2 * rtb_K1_c[i] *
+                   rtb_V_lookup_o2) + rtb_K1_c[i + 4] * w2 * g3) + rtb_K1_c[i +
                  6] * w2 * rtU.q)) + (((rtb_K1[i + 2] * rtb_mu_idx_3 *
       rtb_V_lookup2_o2 + rtb_mu_idx_3 * rtb_K1[i] * rtb_V_lookup_o2) + rtb_K1[i
       + 4] * rtb_mu_idx_3 * g3) + rtb_K1[i + 6] * rtb_mu_idx_3 * rtU.q));
@@ -1193,10 +996,18 @@ void sistema_de_control::step()
 // Model initialize function
 void sistema_de_control::initialize()
 {
-  // Registration code
+  // (no initialization code required)
+}
 
-  // initialize non-finites
-  rt_InitInfAndNaN(sizeof(real_T));
+const char_T* sistema_de_control::RT_MODEL::getErrorStatus() const
+{
+  return (errorStatus);
+}
+
+void sistema_de_control::RT_MODEL::setErrorStatus(const char_T* const volatile
+  aErrorStatus)
+{
+  (errorStatus = aErrorStatus);
 }
 
 // Constructor

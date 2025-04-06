@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'controlador'.
 //
-// Model version                  : 2.31
-// Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Wed Feb 26 19:23:54 2025
+// Model version                  : 4.2
+// Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
+// C/C++ source code generated on : Wed Apr  2 19:07:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -18,13 +18,11 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
-
-#pragma GCC diagnostic ignored "-Wfloat-equal"
 #include "controlador.h"
 #include <cmath>
 #include "rtwtypes.h"
-#include <stddef.h>
-#define NumBitsPerChar                 8U
+#include "cmath"
+#include "limits"
 
 extern real_T rt_atan2d_snf(real_T u0, real_T u1);
 static uint32_T plook_binx(real_T u, const real_T bp[], uint32_T maxIndex,
@@ -67,193 +65,58 @@ static void rate_scheduler(controlador::RT_MODEL *const rtM);
 
 extern "C"
 {
-  real_T rtInf;
-  real_T rtMinusInf;
-  real_T rtNaN;
-  real32_T rtInfF;
-  real32_T rtMinusInfF;
-  real32_T rtNaNF;
+  real_T rtNaN { -std::numeric_limits<real_T>::quiet_NaN() };
+
+  real_T rtInf { std::numeric_limits<real_T>::infinity() };
+
+  real_T rtMinusInf { -std::numeric_limits<real_T>::infinity() };
+
+  real32_T rtNaNF { -std::numeric_limits<real32_T>::quiet_NaN() };
+
+  real32_T rtInfF { std::numeric_limits<real32_T>::infinity() };
+
+  real32_T rtMinusInfF { -std::numeric_limits<real32_T>::infinity() };
 }
 
 extern "C"
 {
-  //
-  // Initialize rtNaN needed by the generated code.
-  // NaN is initialized as non-signaling. Assumes IEEE.
-  //
+  // Return rtNaN needed by the generated code.
   static real_T rtGetNaN(void)
   {
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    real_T nan{ 0.0 };
-
-    if (bitsPerReal == 32U) {
-      nan = rtGetNaNF();
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.bitVal.words.wordH = 0xFFF80000U;
-      tmpVal.bitVal.words.wordL = 0x00000000U;
-      nan = tmpVal.fltVal;
-    }
-
-    return nan;
+    return rtNaN;
   }
 
-  //
-  // Initialize rtNaNF needed by the generated code.
-  // NaN is initialized as non-signaling. Assumes IEEE.
-  //
+  // Return rtNaNF needed by the generated code.
   static real32_T rtGetNaNF(void)
   {
-    IEEESingle nanF{ { 0.0F } };
-
-    nanF.wordL.wordLuint = 0xFFC00000U;
-    return nanF.wordL.wordLreal;
+    return rtNaNF;
   }
 }
 
 extern "C"
 {
-  //
-  // Initialize the rtInf, rtMinusInf, and rtNaN needed by the
-  // generated code. NaN is initialized as non-signaling. Assumes IEEE.
-  //
-  static void rt_InitInfAndNaN(size_t realSize)
-  {
-    (void) (realSize);
-    rtNaN = rtGetNaN();
-    rtNaNF = rtGetNaNF();
-    rtInf = rtGetInf();
-    rtInfF = rtGetInfF();
-    rtMinusInf = rtGetMinusInf();
-    rtMinusInfF = rtGetMinusInfF();
-  }
-
   // Test if value is infinite
   static boolean_T rtIsInf(real_T value)
   {
-    return (boolean_T)((value==rtInf || value==rtMinusInf) ? 1U : 0U);
+    return std::isinf(value);
   }
 
   // Test if single-precision value is infinite
   static boolean_T rtIsInfF(real32_T value)
   {
-    return (boolean_T)(((value)==rtInfF || (value)==rtMinusInfF) ? 1U : 0U);
+    return std::isinf(value);
   }
 
   // Test if value is not a number
   static boolean_T rtIsNaN(real_T value)
   {
-    boolean_T result{ (boolean_T) 0 };
-
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    if (bitsPerReal == 32U) {
-      result = rtIsNaNF((real32_T)value);
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.fltVal = value;
-      result = (boolean_T)((tmpVal.bitVal.words.wordH & 0x7FF00000) ==
-                           0x7FF00000 &&
-                           ( (tmpVal.bitVal.words.wordH & 0x000FFFFF) != 0 ||
-                            (tmpVal.bitVal.words.wordL != 0) ));
-    }
-
-    return result;
+    return std::isnan(value);
   }
 
   // Test if single-precision value is not a number
   static boolean_T rtIsNaNF(real32_T value)
   {
-    IEEESingle tmp;
-    tmp.wordL.wordLreal = value;
-    return (boolean_T)( (tmp.wordL.wordLuint & 0x7F800000) == 0x7F800000 &&
-                       (tmp.wordL.wordLuint & 0x007FFFFF) != 0 );
-  }
-}
-
-extern "C"
-{
-  //
-  // Initialize rtInf needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real_T rtGetInf(void)
-  {
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    real_T inf{ 0.0 };
-
-    if (bitsPerReal == 32U) {
-      inf = rtGetInfF();
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.bitVal.words.wordH = 0x7FF00000U;
-      tmpVal.bitVal.words.wordL = 0x00000000U;
-      inf = tmpVal.fltVal;
-    }
-
-    return inf;
-  }
-
-  //
-  // Initialize rtInfF needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real32_T rtGetInfF(void)
-  {
-    IEEESingle infF;
-    infF.wordL.wordLuint = 0x7F800000U;
-    return infF.wordL.wordLreal;
-  }
-
-  //
-  // Initialize rtMinusInf needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real_T rtGetMinusInf(void)
-  {
-    size_t bitsPerReal{ sizeof(real_T) * (NumBitsPerChar) };
-
-    real_T minf{ 0.0 };
-
-    if (bitsPerReal == 32U) {
-      minf = rtGetMinusInfF();
-    } else {
-      union {
-        LittleEndianIEEEDouble bitVal;
-        real_T fltVal;
-      } tmpVal;
-
-      tmpVal.bitVal.words.wordH = 0xFFF00000U;
-      tmpVal.bitVal.words.wordL = 0x00000000U;
-      minf = tmpVal.fltVal;
-    }
-
-    return minf;
-  }
-
-  //
-  // Initialize rtMinusInfF needed by the generated code.
-  // Inf is initialized as non-signaling. Assumes IEEE.
-  //
-  static real32_T rtGetMinusInfF(void)
-  {
-    IEEESingle minfF;
-    minfF.wordL.wordLuint = 0xFF800000U;
-    return minfF.wordL.wordLreal;
+    return std::isnan(value);
   }
 }
 
@@ -400,7 +263,7 @@ void controlador::step()
   real_T rtb_Peq_dT;
   real_T rtb_V;
   real_T rtb_V_lookup_o2;
-  real_T rtb_gamma;
+  real_T rtb_Vd;
   real_T rtb_gamma_lookup_o2;
   int32_T i;
   uint32_T bpIndex[2];
@@ -420,18 +283,18 @@ void controlador::step()
   uint32_T rtb_gamma_lookup1_o1;
 
   // Outputs for Atomic SubSystem: '<Root>/controlador'
-  // Gain: '<S4>/Gain' incorporates:
+  // Gain: '<S6>/Gain' incorporates:
   //   Inport: '<Root>/gammad'
 
   rtb_Gain = 0.017453292519943295 * rtU.gammad;
 
-  // PreLookup: '<S4>/gamma_lookup1'
+  // PreLookup: '<S6>/gamma_lookup1'
   rtb_gamma_lookup1_o1 = plook_binx(rtb_Gain, rtConstP.pooled1, 12U,
     &rtb_V_lookup_o2);
 
-  // Interpolation_n-D: '<S4>/Peq_dT' incorporates:
+  // Interpolation_n-D: '<S6>/Peq_dT' incorporates:
   //   Inport: '<Root>/Vd'
-  //   PreLookup: '<S4>/V_lookup1'
+  //   PreLookup: '<S6>/V_lookup1'
 
   bpIndex[1] = plook_binx(rtU.Vd, rtConstP.pooled2, 13U, &rtb_gamma_lookup_o2);
   frac[0] = rtb_V_lookup_o2;
@@ -439,8 +302,8 @@ void controlador::step()
   bpIndex[0] = rtb_gamma_lookup1_o1;
   rtb_Peq_dT = intrp2d_g(bpIndex, frac, rtConstP.pooled3, 13U);
 
-  // MATLAB Function: '<S4>/MATLAB Function1' incorporates:
-  //   Constant: '<S4>/Constant'
+  // MATLAB Function: '<S6>/MATLAB Function1' incorporates:
+  //   Constant: '<S6>/Constant'
   //   Inport: '<Root>/Vd'
 
   if (rtb_Peq_dT < 0.0) {
@@ -449,27 +312,24 @@ void controlador::step()
       rtb_V_lookup_o1 = MAX_uint32_T;
     }
 
-    rtb_Peq_dT = rtConstP.Constant_Value[static_cast<int32_T>(rtb_V_lookup_o1) -
-      1];
+    rtb_Vd = rtConstP.Constant_Value[static_cast<int32_T>(rtb_V_lookup_o1) - 1];
   } else if (rtb_Peq_dT > 4.7382) {
     rtb_V_lookup_o1 = rtb_gamma_lookup1_o1 + /*MW:OvSatOk*/ 1U;
     if (rtb_gamma_lookup1_o1 + 1U < rtb_gamma_lookup1_o1) {
       rtb_V_lookup_o1 = MAX_uint32_T;
     }
 
-    rtb_Peq_dT = rtConstP.Constant_Value[static_cast<int32_T>(rtb_V_lookup_o1) +
-      12];
+    rtb_Vd = rtConstP.Constant_Value[static_cast<int32_T>(rtb_V_lookup_o1) + 12];
   } else {
-    rtb_Peq_dT = rtU.Vd;
+    rtb_Vd = rtU.Vd;
   }
 
-  // End of MATLAB Function: '<S4>/MATLAB Function1'
+  // End of MATLAB Function: '<S6>/MATLAB Function1'
 
-  // Interpolation_n-D: '<S4>/Peq_alpha' incorporates:
-  //   PreLookup: '<S4>/V_lookup2'
+  // Interpolation_n-D: '<S6>/Peq_alpha' incorporates:
+  //   PreLookup: '<S6>/V_lookup2'
 
-  bpIndex_0[1] = plook_binx(rtb_Peq_dT, rtConstP.pooled2, 13U,
-    &rtb_gamma_lookup_o2);
+  bpIndex_0[1] = plook_binx(rtb_Vd, rtConstP.pooled2, 13U, &rtb_gamma_lookup_o2);
   frac_0[0] = rtb_V_lookup_o2;
   frac_0[1] = rtb_gamma_lookup_o2;
   bpIndex_0[0] = rtb_gamma_lookup1_o1;
@@ -480,77 +340,77 @@ void controlador::step()
   //   Inport: '<Root>/u'
   //   Inport: '<Root>/w'
 
-  rtb_gamma = rtU.theta - rt_atan2d_snf(rtU.w, rtU.u);
+  rtb_Peq_dT = rtU.theta - rt_atan2d_snf(rtU.w, rtU.u);
   rtb_V = std::sqrt(rtU.u * rtU.u + rtU.w * rtU.w);
 
-  // PreLookup: '<S5>/gamma_lookup'
-  rtb_gamma_lookup1_o1 = plook_binx(rtb_gamma, rtConstP.pooled1, 12U,
+  // PreLookup: '<S7>/gamma_lookup'
+  rtb_gamma_lookup1_o1 = plook_binx(rtb_Peq_dT, rtConstP.pooled1, 12U,
     &rtb_gamma_lookup_o2);
 
-  // PreLookup: '<S5>/V_lookup'
+  // PreLookup: '<S7>/V_lookup'
   rtb_V_lookup_o1 = plook_binx(rtb_V, rtConstP.pooled2, 13U, &rtb_V_lookup_o2);
 
-  // Interpolation_n-D: '<S5>/k1de'
+  // Interpolation_n-D: '<S7>/k1de'
   frac_1[0] = rtb_gamma_lookup_o2;
   frac_1[1] = rtb_V_lookup_o2;
   bpIndex_1[0] = rtb_gamma_lookup1_o1;
   bpIndex_1[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k2de'
+  // Interpolation_n-D: '<S7>/k2de'
   frac_2[0] = rtb_gamma_lookup_o2;
   frac_2[1] = rtb_V_lookup_o2;
   bpIndex_2[0] = rtb_gamma_lookup1_o1;
   bpIndex_2[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k3de'
+  // Interpolation_n-D: '<S7>/k3de'
   frac_3[0] = rtb_gamma_lookup_o2;
   frac_3[1] = rtb_V_lookup_o2;
   bpIndex_3[0] = rtb_gamma_lookup1_o1;
   bpIndex_3[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k4de'
+  // Interpolation_n-D: '<S7>/k4de'
   frac_4[0] = rtb_gamma_lookup_o2;
   frac_4[1] = rtb_V_lookup_o2;
   bpIndex_4[0] = rtb_gamma_lookup1_o1;
   bpIndex_4[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k1dT'
+  // Interpolation_n-D: '<S7>/k1dT'
   frac_5[0] = rtb_gamma_lookup_o2;
   frac_5[1] = rtb_V_lookup_o2;
   bpIndex_5[0] = rtb_gamma_lookup1_o1;
   bpIndex_5[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k2dT'
+  // Interpolation_n-D: '<S7>/k2dT'
   frac_6[0] = rtb_gamma_lookup_o2;
   frac_6[1] = rtb_V_lookup_o2;
   bpIndex_6[0] = rtb_gamma_lookup1_o1;
   bpIndex_6[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k3dT'
+  // Interpolation_n-D: '<S7>/k3dT'
   frac_7[0] = rtb_gamma_lookup_o2;
   frac_7[1] = rtb_V_lookup_o2;
   bpIndex_7[0] = rtb_gamma_lookup1_o1;
   bpIndex_7[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/k4dT'
+  // Interpolation_n-D: '<S7>/k4dT'
   frac_8[0] = rtb_gamma_lookup_o2;
   frac_8[1] = rtb_V_lookup_o2;
   bpIndex_8[0] = rtb_gamma_lookup1_o1;
   bpIndex_8[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/Peq_de'
+  // Interpolation_n-D: '<S7>/Peq_de'
   frac_9[0] = rtb_gamma_lookup_o2;
   frac_9[1] = rtb_V_lookup_o2;
   bpIndex_9[0] = rtb_gamma_lookup1_o1;
   bpIndex_9[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/Peq_dT'
+  // Interpolation_n-D: '<S7>/Peq_dT'
   frac_a[0] = rtb_gamma_lookup_o2;
   frac_a[1] = rtb_V_lookup_o2;
   bpIndex_a[0] = rtb_gamma_lookup1_o1;
   bpIndex_a[1] = rtb_V_lookup_o1;
 
-  // Interpolation_n-D: '<S5>/Peq_wd'
+  // Interpolation_n-D: '<S7>/Peq_wd'
   frac_b[0] = rtb_gamma_lookup_o2;
   frac_b[1] = rtb_V_lookup_o2;
   bpIndex_b[0] = rtb_gamma_lookup1_o1;
@@ -562,15 +422,17 @@ void controlador::step()
   //   Inport: '<Root>/theta'
   //   Inport: '<Root>/u'
   //   Inport: '<Root>/w'
-  //   Interpolation_n-D: '<S5>/k1dT'
-  //   Interpolation_n-D: '<S5>/k1de'
-  //   Interpolation_n-D: '<S5>/k2dT'
-  //   Interpolation_n-D: '<S5>/k2de'
-  //   Interpolation_n-D: '<S5>/k3dT'
-  //   Interpolation_n-D: '<S5>/k3de'
-  //   Interpolation_n-D: '<S5>/k4dT'
-  //   Interpolation_n-D: '<S5>/k4de'
-  //   MATLAB Function: '<S4>/MATLAB Function'
+  //   Interpolation_n-D: '<S7>/Peq_dT'
+  //   Interpolation_n-D: '<S7>/Peq_de'
+  //   Interpolation_n-D: '<S7>/k1dT'
+  //   Interpolation_n-D: '<S7>/k1de'
+  //   Interpolation_n-D: '<S7>/k2dT'
+  //   Interpolation_n-D: '<S7>/k2de'
+  //   Interpolation_n-D: '<S7>/k3dT'
+  //   Interpolation_n-D: '<S7>/k3de'
+  //   Interpolation_n-D: '<S7>/k4dT'
+  //   Interpolation_n-D: '<S7>/k4de'
+  //   MATLAB Function: '<S6>/MATLAB Function'
 
   tmp[0] = -intrp2d_g(bpIndex_1, frac_1, rtConstP.k1de_Table, 13U);
   tmp[2] = -intrp2d_g(bpIndex_2, frac_2, rtConstP.k2de_Table, 13U);
@@ -580,26 +442,49 @@ void controlador::step()
   tmp[3] = -intrp2d_g(bpIndex_6, frac_6, rtConstP.k2dT_Table, 13U);
   tmp[5] = -intrp2d_g(bpIndex_7, frac_7, rtConstP.k3dT_Table, 13U);
   tmp[7] = -intrp2d_g(bpIndex_8, frac_8, rtConstP.k4dT_Table, 13U);
-  rtb_gamma_lookup_o2 = rtU.u - rtb_Peq_dT * std::cos(rtb_Peq_alpha);
-  rtb_Peq_dT = rtU.w - rtb_V_lookup_o2;
+  rtb_gamma_lookup_o2 = rtU.u - rtb_Vd * std::cos(rtb_Peq_alpha);
+  rtb_Vd = rtU.w - rtb_V_lookup_o2;
   rtb_Gain = rtU.theta - (rtb_Peq_alpha + rtb_Gain);
   for (i = 0; i < 2; i++) {
-    frac[i] = ((tmp[i + 2] * rtb_Peq_dT + tmp[i] * rtb_gamma_lookup_o2) + tmp[i
-               + 4] * rtb_Gain) + tmp[i + 6] * rtU.q;
+    frac[i] = ((tmp[i + 2] * rtb_Vd + tmp[i] * rtb_gamma_lookup_o2) + tmp[i + 4]
+               * rtb_Gain) + tmp[i + 6] * rtU.q;
   }
 
-  // Outport: '<Root>/de' incorporates:
-  //   Interpolation_n-D: '<S5>/Peq_de'
-  //   MATLAB Function: '<S1>/MATLAB Function'
+  rtb_Gain = frac[0] + intrp2d_g(bpIndex_9, frac_9, rtConstP.Peq_de_Table, 13U);
+  rtb_Vd = frac[1] + intrp2d_g(bpIndex_a, frac_a, rtConstP.pooled3, 13U);
 
-  rtY.de = frac[0] + intrp2d_g(bpIndex_9, frac_9, rtConstP.Peq_de_Table, 13U);
+  // End of MATLAB Function: '<S1>/MATLAB Function'
 
-  // Outport: '<Root>/dT' incorporates:
-  //   Interpolation_n-D: '<S5>/Peq_dT'
-  //   MATLAB Function: '<S1>/MATLAB Function'
+  // MATLAB Function: '<S1>/Ajuste de salida para implementacion de'
+  if (rtb_Gain < -0.3490658503988659) {
+    // Outport: '<Root>/de'
+    rtY.de = -1.0;
+  } else if (rtb_Gain > 0.52359877559829882) {
+    // Outport: '<Root>/de'
+    rtY.de = 1.0;
+  } else if ((rtb_Gain > -0.3490658503988659) && (rtb_Gain < 0.0)) {
+    // Outport: '<Root>/de'
+    rtY.de = 2.8647889756541161 * rtb_Gain;
+  } else {
+    // Outport: '<Root>/de'
+    rtY.de = 1.9098593171027443 * rtb_Gain;
+  }
 
-  rtY.dT = frac[1] + intrp2d_g(bpIndex_a, frac_a, rtConstP.pooled3, 13U);
+  // End of MATLAB Function: '<S1>/Ajuste de salida para implementacion de'
 
+  // MATLAB Function: '<S1>/Ajuste de salida para implementacion dT'
+  if (rtb_Vd < 0.0) {
+    // Outport: '<Root>/dT'
+    rtY.dT = 0.0;
+  } else if (rtb_Vd > 4.873) {
+    // Outport: '<Root>/dT'
+    rtY.dT = 1.0;
+  } else {
+    // Outport: '<Root>/dT'
+    rtY.dT = 0.20521239482864764 * rtb_Vd;
+  }
+
+  // End of MATLAB Function: '<S1>/Ajuste de salida para implementacion dT'
   // End of Outputs for SubSystem: '<Root>/controlador'
 
   // Outport: '<Root>/wd'
@@ -609,17 +494,25 @@ void controlador::step()
   rtY.V = rtb_V;
 
   // Outport: '<Root>/gamma'
-  rtY.gamma = rtb_gamma;
+  rtY.gamma = rtb_Peq_dT;
   rate_scheduler((&rtM));
 }
 
 // Model initialize function
 void controlador::initialize()
 {
-  // Registration code
+  // (no initialization code required)
+}
 
-  // initialize non-finites
-  rt_InitInfAndNaN(sizeof(real_T));
+const char_T* controlador::RT_MODEL::getErrorStatus() const
+{
+  return (errorStatus);
+}
+
+void controlador::RT_MODEL::setErrorStatus(const char_T* const volatile
+  aErrorStatus)
+{
+  (errorStatus = aErrorStatus);
 }
 
 // Constructor

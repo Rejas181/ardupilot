@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'controlador'.
 //
-// Model version                  : 2.31
-// Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Wed Feb 26 19:23:54 2025
+// Model version                  : 4.2
+// Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
+// C/C++ source code generated on : Wed Apr  2 19:07:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
@@ -43,7 +43,7 @@ void rt_OneStep(void)
 
   // Check for overrun
   if (OverrunFlag) {
-    rtmSetErrorStatus(rtObj.getRTM(), "Overrun");
+    rtObj.getRTM()->setErrorStatus("Overrun");
     return;
   }
 
@@ -91,7 +91,7 @@ int_T main(int_T argc, const char *argv[])
          "Generated ERT main won't simulate model step behavior. "
          "To change this behavior select the 'MAT-file logging' option.\n");
   fflush((nullptr));
-  while (rtmGetErrorStatus(rtObj.getRTM()) == (nullptr)) {
+  while (rtObj.getRTM()->getErrorStatus() == (nullptr)) {
     //  Perform application tasks here
   }
 

@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'sistema_de_control'.
 //
-// Model version                  : 2.39
-// Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
-// C/C++ source code generated on : Wed Feb 26 19:27:43 2025
+// Model version                  : 2.40
+// Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
+// C/C++ source code generated on : Wed Apr  2 20:11:46 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-A (64-bit)
