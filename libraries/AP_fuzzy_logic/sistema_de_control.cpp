@@ -18,6 +18,7 @@
 //    2. RAM efficiency
 // Validation result: Not run
 //
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 #include "sistema_de_control.h"
 #include "rtwtypes.h"
 #include <cmath>
@@ -61,7 +62,7 @@ static uint32_T binsearch_u32d(real_T u, const real_T bp[], uint32_T startIndex,
 #define UNUSED_PARAMETER(x)            (void) (x)
 #endif
 #endif
-
+/*
 extern "C"
 {
   real_T rtNaN { -std::numeric_limits<real_T>::quiet_NaN() };
@@ -76,7 +77,7 @@ extern "C"
 
   real32_T rtMinusInfF { -std::numeric_limits<real32_T>::infinity() };
 }
-
+*/
 extern "C"
 {
   // Return rtNaN needed by the generated code.
@@ -207,7 +208,7 @@ void sistema_de_control::generadordematriz(real_T rtu_k1e, real_T rtu_k2e,
   rty_K1[5] = rtu_k3dT;
   rty_K1[7] = rtu_k4dT;
 }
-
+/*
 real_T rt_atan2d_snf(real_T u0, real_T u1)
 {
   real_T y;
@@ -243,7 +244,7 @@ real_T rt_atan2d_snf(real_T u0, real_T u1)
 
   return y;
 }
-
+*/
 // Model step function
 void sistema_de_control::step()
 {
