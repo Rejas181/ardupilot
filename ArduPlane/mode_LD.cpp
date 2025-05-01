@@ -73,7 +73,7 @@ void ModeLD::update()
     output_rudder_and_steering(plane.rudder_in_expo(false));                                    //Salida manual del Timón (obtenida de: mode manual)
     SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, throttle_out);                     //Salida del acelerador
 
-    plane.Log_Write_LD(V_d,gamma_d,airspeed_vec_bf.x,airspeed_vec_bf.z,theta,vel_ang.y,Control.rtY.delta_e,Control.rtY.delta_T); //Escritura del registro
+    plane.Log_Write_LD(float(V_d,gamma_d),float(airspeed_vec_bf.x),float(airspeed_vec_bf.z),float(theta,vel_ang.y),float(Control.rtY.delta_e),float(Control.rtY.delta_T)); //Escritura del registro
    
    
 }
