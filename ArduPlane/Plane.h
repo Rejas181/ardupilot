@@ -957,7 +957,7 @@ private:
     void Log_Write_AETR();
     void Log_Write_GS(float V_d, float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT);
     void Log_Write_LD(float V_d, float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT);
-    void Log_Write_Manual(float V_d, float gamma_d, float vel_x, float vel_z, float theta, float q,);
+    void Log_Write_Manual(float V_d, float gamma_d, float vel_x, float vel_z, float theta, float q);
 #endif
 
     // Parameters.cpp
