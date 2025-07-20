@@ -6,8 +6,6 @@ void ModeManual::update()
 // ===================================== datos a registrar ==================================================================================
     float pitch_input = plane.channel_pitch->norm_input();       //demanda de cabeceo normalizado de -1 a 1 de 1000 a 2000 PWM
     float throttle_input = plane.channel_throttle->norm_input(); //demanda de acelerador  normalizado de -1 a 1 de 1000 a 2000 PWM
-    float pitch_out;                                             //salida del elevador en PWM
-    float throttle_out;                                          //salida del acelerador en PWM
     float gamma_d;                                               //valor de gamma deseado   
 
     if(pitch_input > 0) {gamma_d=pitch_input*16;}                 //ajuste del angulo deseado de cabeceo
