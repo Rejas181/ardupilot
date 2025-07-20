@@ -329,6 +329,17 @@ struct PACKED log_LD {
     float dT;
 };
 
+struct PACKED log_MN {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float V_d;
+    float gamma_d;
+    float vel_x;
+    float vel_z;
+    float theta;
+    float q;
+};
+
 
 void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q, float de, float dT)
 {
@@ -343,6 +354,22 @@ void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, floa
         ,q          : q
         ,de     : de
         ,dT     : dT
+        };
+
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+void Plane::Log_Write_Manual(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q,)
+{
+    struct log_MN pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_MN_MSG)
+        ,time_us    : AP_HAL::micros64()
+        ,V_d        : V_d
+        ,gamma_d    : gamma_d
+        ,vel_x      : vel_x
+        ,vel_z      : vel_z
+        ,theta      : theta
+        ,q          : q
         };
 
     logger.WriteBlock(&pkt, sizeof(pkt));
