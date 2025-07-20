@@ -609,6 +609,18 @@ const struct LogStructure Plane::log_structure[] = {
     { LOG_LD_MSG, sizeof(log_LD),
         "LD", "Qffffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q,de,dT", "snEnnrE--", "F--------" , true },
 
+// @LoggerMessage: Manual
+// @Description: Datos utiles para el controlador de Logica difusa
+// @Field: TimeUS: Time since system startup
+// @Field: V_d: Valor de velocidad deseada en m/s
+// @Field: gamma_d: Valor de angulo de trayectoria deseado en rad
+// @Field: velx: velocidad en el sistema cuerpo para el eje x en m/s
+// @Field: velz: velocidad en el sistema cuerpo para el eje z en m/s
+// @Field: theta: angulo de cabeceo de la aeronave en rad
+// @Field: q: velocidad de cabeceo de la aeronave en rad/s
+    { LOG_MN_MSG, sizeof(log_MN),
+        "MN", "Qffffff",  "TimeUS,V_d,gamma_d,velx,vely,theta,q", "snEnnrE", "F------" , true },
+
 #if AP_PLANE_OFFBOARD_GUIDED_SLEW_ENABLED
 // @LoggerMessage: OFG
 // @Description: OFfboard-Guided - an advanced version of GUIDED for companion computers that includes rate/s.  
