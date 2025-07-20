@@ -359,7 +359,7 @@ void Plane::Log_Write_LD(float V_d,float gamma_d, float vel_x, float vel_z, floa
     logger.WriteBlock(&pkt, sizeof(pkt));
 }
 
-void Plane::Log_Write_Manual(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q,)
+void Plane::Log_Write_Manual(float V_d,float gamma_d, float vel_x, float vel_z, float theta, float q)
 {
     struct log_MN pkt = {
         LOG_PACKET_HEADER_INIT(LOG_MN_MSG)
